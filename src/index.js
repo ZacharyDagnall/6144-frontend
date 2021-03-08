@@ -58,38 +58,50 @@ document.addEventListener("keydown", event => {
 
 function swipeUp() {
     console.log("swiped up!")
+    for (let j = 0; j < 4; j++) {
+        for (let i = 0; i < 4; i++) {
+            moveUp(i, j)
+        }
+    }
+    saveBoard()
 }
 function swipeDown() {
     console.log("swiped down!")
+    for (let j = 0; j < 4; j++) {
+        for (let i = 3; i >= 0; i--) {
+            moveDown(i, j)
+        }
+    }
+    saveBoard()
 }
 function swipeLeft() {
     console.log("swiped left!")
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            moveLeft(i, j)
+        }
+    }
+    saveBoard()
 }
 function swipeRight() {
     console.log("swiped right!")
-    // find dom board
     for (let i = 0; i < 4; i++) {
         for (let j = 3; j >= 0; j--) {
             moveRight(i, j)
         }
     }
-    // figure out what the new board should be
-    // patch (fetch)
-    // loadBoard()
+    saveBoard()
 }
 
 function moveRight(i, j) {
     if (j !== 3) {
         let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
         let nextTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-        console.log(htmlTile)
-        console.log(nextTile)
 
         if (nextTile.textContent === "0") {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            // htmlTile.classList.add("blank")
             moveRight(i, j + 1)
         } else {
             //smush
@@ -98,8 +110,58 @@ function moveRight(i, j) {
     blankZeroes()
 }
 
+function moveLeft(i, j) {
+    if (j !== 0) {
+        let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
+        let nextTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
+
+        if (nextTile.textContent === "0") {
+            nextTile.textContent = htmlTile.textContent
+            nextTile.classList.remove("blank")
+            htmlTile.textContent = 0
+            moveLeft(i, j - 1)
+        } else {
+            //smush
+        }
+    }
+    blankZeroes()
+}
+
+function moveDown(i, j) {
+    if (i !== 3) {
+        let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
+        let nextTile = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
+
+        if (nextTile.textContent === "0") {
+            nextTile.textContent = htmlTile.textContent
+            nextTile.classList.remove("blank")
+            htmlTile.textContent = 0
+            moveDown(i + 1, j)
+        } else {
+            //smush
+        }
+    }
+    blankZeroes()
+}
+
+function moveUp(i, j) {
+    if (i !== 0) {
+        let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
+        let nextTile = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
+
+        if (nextTile.textContent === "0") {
+            nextTile.textContent = htmlTile.textContent
+            nextTile.classList.remove("blank")
+            htmlTile.textContent = 0
+            moveUp(i - 1, j)
+        } else {
+            //smush
+        }
+    }
+    blankZeroes()
+}
+
 function blankZeroes() {
-    // tiles = document.querySelectorAll('.tile')
     console.log(tiles)
     tiles.forEach(tile => {
         if (tile.textContent === "0") {
@@ -107,6 +169,27 @@ function blankZeroes() {
         }
     })
 }
+
+function saveBoard() {
+    // make a [[]]
+    let board = [[], [], [], []]
+    tiles.forEach(tile => {
+        let i = tile.parentNode.getAttribute('row-id')
+        let j = tile.getAttribute('col-id')
+        board[i][j] = tile.textContent
+    })
+    fetch(`http://localhost:3000/games/2`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ 'board_state': board })
+    })
+        .then(r => r.json())
+    //don't need to do anything with saved board because we already updated the dom optimistically
+}
+
 
 makeBoard()
 fetchBoard() // blank or most recent
