@@ -25,7 +25,9 @@ function loadBoard(board) {  //render board (new or updated)
             }
         })
     })
+    blankZeroes()
 }
+
 const htmlScore = document.querySelector('#actual-score')
 function loadScore(score) {
     htmlScore.textContent = score
@@ -41,6 +43,9 @@ function fetchBoard() {
 }
 
 document.addEventListener("keydown", event => {
+    tiles.forEach(tile => {
+        tile.classList.remove("smushed")
+    })
     if (event.key === "ArrowUp") {
         event.preventDefault()
         swipeUp()
@@ -63,7 +68,7 @@ function swipeUp() {
             moveUp(i, j)
         }
     }
-    saveBoard()
+    save()
 }
 function swipeDown() {
     console.log("swiped down!")
@@ -72,7 +77,7 @@ function swipeDown() {
             moveDown(i, j)
         }
     }
-    saveBoard()
+    save()
 }
 function swipeLeft() {
     console.log("swiped left!")
@@ -81,7 +86,7 @@ function swipeLeft() {
             moveLeft(i, j)
         }
     }
-    saveBoard()
+    save()
 }
 function swipeRight() {
     console.log("swiped right!")
@@ -90,7 +95,7 @@ function swipeRight() {
             moveRight(i, j)
         }
     }
-    saveBoard()
+    save()
 }
 
 function moveRight(i, j) {
@@ -103,8 +108,13 @@ function moveRight(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveRight(i, j + 1)
-        } else {
-            //smush
+        } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+            let score = 2 * parseInt(htmlTile.textContent)
+            nextTile.textContent = score
+            nextTile.classList.add("smushed")
+            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlTile.textContent = 0
+            moveRight(i, j + 1)
         }
     }
     blankZeroes()
@@ -120,8 +130,13 @@ function moveLeft(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveLeft(i, j - 1)
-        } else {
-            //smush
+        } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+            let score = 2 * parseInt(htmlTile.textContent)
+            nextTile.textContent = score
+            nextTile.classList.add("smushed")
+            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlTile.textContent = 0
+            moveLeft(i, j - 1)
         }
     }
     blankZeroes()
@@ -137,8 +152,13 @@ function moveDown(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveDown(i + 1, j)
-        } else {
-            //smush
+        } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+            let score = 2 * parseInt(htmlTile.textContent)
+            nextTile.textContent = score
+            nextTile.classList.add("smushed")
+            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlTile.textContent = 0
+            moveDown(i + 1, j)
         }
     }
     blankZeroes()
@@ -154,15 +174,34 @@ function moveUp(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveUp(i - 1, j)
-        } else {
-            //smush
+        } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+            let score = 2 * parseInt(htmlTile.textContent)
+            nextTile.textContent = score
+            nextTile.classList.add("smushed")
+            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlTile.textContent = 0
+            moveUp(i - 1, j)
         }
     }
     blankZeroes()
 }
 
+// function fetchScore(newPoints) {
+//     fetch(`http://localhost:3000/games/2`, {
+//         method: 'PATCH',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//         },
+//         body: JSON.stringify({ score: parseInt(htmlScore.textContent) + newPoints })
+//     })
+//         .then(r => r.json())
+//         .then(game => {
+//             loadScore(game.score)
+//         })
+// }
+
 function blankZeroes() {
-    console.log(tiles)
     tiles.forEach(tile => {
         if (tile.textContent === "0") {
             tile.classList.add("blank")
@@ -170,23 +209,24 @@ function blankZeroes() {
     })
 }
 
-function saveBoard() {
-    // make a [[]]
+function save() {
     let board = [[], [], [], []]
     tiles.forEach(tile => {
         let i = tile.parentNode.getAttribute('row-id')
         let j = tile.getAttribute('col-id')
         board[i][j] = tile.textContent
     })
+    console.log(board)
     fetch(`http://localhost:3000/games/2`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ 'board_state': board })
+        body: JSON.stringify({ board_state: board, score: parseInt(htmlScore.textContent) })
     })
         .then(r => r.json())
+        .then(console.log)
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
 

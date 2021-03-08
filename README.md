@@ -1,13 +1,14 @@
-TO-DO list
-
+TO-DONE List
 * other moves
 *** left, down, up
 *** save to DB
+* smush
 * score
 *** just tack on score to DOM
 *** save to DB
-* smush
-***
+
+
+TO-DO list
 * add a random new tile
 *** on a random blank tile (either 3 or 6)
 * fail state
