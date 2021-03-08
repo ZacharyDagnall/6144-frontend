@@ -1,0 +1,25 @@
+#board {
+    display: flex;
+    flex-wrap: wrap; 
+    width: 450px;
+    height: 450px;
+    background-color: yellow;
+}
+
+.row {
+    width: 600px;
+}
+
+.tile {
+    float:left;
+    text-align: center;
+    font-size: 25px;
+    width: 30px;
+    padding: 25px;
+    border: 5px solid black;
+    margin: 10px;
+}
+
+.blank {
+    visibility: hidden;
+}
