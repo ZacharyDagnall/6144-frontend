@@ -1,10 +1,4 @@
 
-document.addEventListener("DOMContentLoaded", event => {
-    makeBoard()
-    //loadScore()
-    fetchBoard() // blank or most recent
-})
-
 const boardDiv = document.querySelector('#board')
 function makeBoard() {  //create HTML items on document
     for (let i = 0; i < 4; i++) {
@@ -21,16 +15,17 @@ function makeBoard() {  //create HTML items on document
     }
 }
 function loadBoard(board) {  //render board (new or updated)
-    let tiles = document.querySelectorAll('.tile')
-    board.forEach(row => {
-
-        row.forEach(col => {
-
+    board.forEach((row, i) => {
+        let htmlRow = document.querySelector(`[row-id="${i}"]`)
+        row.forEach((col, j) => {
+            let htmlCol = htmlRow.querySelector(`[col-id="${j}"]`)
+            htmlCol.textContent = col
         })
     })
 }
-function loadScore() {
-
+const htmlScore = document.querySelector('#actual-score')
+function loadScore(score) {
+    htmlScore.textContent = score
 }
 
 function fetchBoard() {
@@ -38,7 +33,7 @@ function fetchBoard() {
         .then(r => r.json())
         .then(game => {
             loadBoard(game.board_state)
-            //loadscore
+            loadScore(game.score)
         })
 }
 
@@ -66,3 +61,7 @@ function swipeLeft() {
 function swipeRight() {
     console.log("swiped righ!")
 }
+
+
+makeBoard()
+fetchBoard() // blank or most recent
