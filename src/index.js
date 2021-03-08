@@ -1,5 +1,12 @@
+// document when loaded
+// // load board
+// // load score
+// // 
 
-// document listener
+
+
+
+// document listener keypress
 // // if up
 // // // swipeUp()
 // // if down 
