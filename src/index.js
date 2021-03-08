@@ -68,6 +68,11 @@ function swipeUp() {
             moveUp(i, j)
         }
     }
+    if (blanks.length !== 0) {
+        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
+        randBlank.textContent = "5"
+        randBlank.classList.remove("blank")
+    }
     save()
 }
 function swipeDown() {
@@ -76,6 +81,11 @@ function swipeDown() {
         for (let i = 3; i >= 0; i--) {
             moveDown(i, j)
         }
+    }
+    if (blanks.length !== 0) {
+        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
+        randBlank.textContent = "5"
+        randBlank.classList.remove("blank")
     }
     save()
 }
@@ -86,6 +96,11 @@ function swipeLeft() {
             moveLeft(i, j)
         }
     }
+    if (blanks.length !== 0) {
+        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
+        randBlank.textContent = "5"
+        randBlank.classList.remove("blank")
+    }
     save()
 }
 function swipeRight() {
@@ -94,6 +109,11 @@ function swipeRight() {
         for (let j = 3; j >= 0; j--) {
             moveRight(i, j)
         }
+    }
+    if (blanks.length !== 0) {
+        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
+        randBlank.textContent = "5"
+        randBlank.classList.remove("blank")
     }
     save()
 }
@@ -207,6 +227,7 @@ function blankZeroes() {
             tile.classList.add("blank")
         }
     })
+    blanks = document.querySelectorAll('.blank')
 }
 
 function save() {
@@ -216,21 +237,52 @@ function save() {
         let j = tile.getAttribute('col-id')
         board[i][j] = tile.textContent
     })
-    console.log(board)
+
+    let game_over = checkGameOver()
+    //do something about it if true
+
     fetch(`http://localhost:3000/games/2`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ board_state: board, score: parseInt(htmlScore.textContent) })
+        body: JSON.stringify({ board_state: board, score: parseInt(htmlScore.textContent), game_over })
     })
         .then(r => r.json())
         .then(console.log)
     //don't need to do anything with saved board because we already updated the dom optimistically
+
+}
+
+function checkGameOver() {
+    if (blanks.length === 0 && noNeighbors) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function noNeighbors() {
+    tiles.forEach(tile => {
+        let i = tile.parentNode.getAttribute('row-id')
+        let j = tile.getAttribute('col-id')
+        // odd row, then even colum, or even row and odd column
+        if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
+            let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
+            let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
+            let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
+            let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
+            if (tile.textContent === upNeighbor.textContent || tile.textContent === downNeighbor.textContent || tile.textContent === leftNeighbor.textContent || tile.textContent === rightNeighbor.textContent) {
+                return false
+            }
+        }
+    })
+    return true
 }
 
 
 makeBoard()
 fetchBoard() // blank or most recent
 const tiles = document.querySelectorAll('.tile')
+let blanks = document.querySelectorAll('.blank')
