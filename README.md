@@ -11,17 +11,17 @@ TO-DONE List
 * fail state
 *** if no blanks exist && no possible smushes
 ****** no smushes: no two adjacent twins
-
-
-TO-DO list
 ** what to do when game over !!
 * picking up a game where you left off
 * signing in
-* new game
+* new game button
+
+
+TO-DO list
+* quit game button
 *** create request
 *** make new board
 *** load new board
-* quit game
 
 ** make stuff pretty
 

@@ -1,6 +1,7 @@
 
 const body = document.querySelector("body")
 const welcome = document.querySelector("#welcome")
+const gameDiv = document.querySelector("#game")
 document.addEventListener("DOMContentLoaded", e => {
     login()
 })
@@ -10,7 +11,7 @@ function makeLogin() {
     login.id = "login-form"
     const username = document.createElement('input')
     username.id = "username-input"
-    username.name = "username"
+    username.name = "name"
     username.placeholder = "Enter Your Name Here!"
     username.required = true
     const loginButton = document.createElement('input')
@@ -25,7 +26,7 @@ function login() {
     let login = makeLogin()
     login.addEventListener("submit", e => {
         e.preventDefault()
-        let username = e.target.username
+        let username = e.target.name.value
         fetch(`http://localhost:3000/users`)
             .then(r => r.json())
             .then(users => {
@@ -66,16 +67,17 @@ let soff = document.querySelector("#soff")
 
 document.addEventListener("click", e => {
     if (e.target == ttt || e.target == soff) {
-        // let div = document.createElement('div')
-        // div.textContent = "Your current Score:"
-        // let div2 = document.createElement('div')
-        // div2.id = "actual-score"
-        // div.append(div2)
-        //
-        // let divboard = document.createElement('div')
-        // divboard.id = "board"
-        //
-        // body.append(div,divboard)
+        gameDiv.replaceChildren()
+        let div = document.createElement('div')
+        div.textContent = "Your current Score:"
+        let div2 = document.createElement('div')
+        div2.id = "actual-score"
+        div.append(div2)
+
+        let divboard = document.createElement('div')
+        divboard.id = "board"
+
+        gameDiv.append(div, divboard)
         if (e.target == ttt) {
             tictactoestart()
         } else {

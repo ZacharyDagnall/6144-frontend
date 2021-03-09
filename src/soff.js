@@ -39,9 +39,10 @@ function soffstart() {
     }
 
     function fetchBoard() {
-        fetch(`http://localhost:3000/games/2`)
+        fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/soff`)
             .then(r => r.json())
             .then(game => {
+                gameDiv.dataset.id = game.id
                 loadBoard(game.board_state)
                 loadScore(game.score)
             })
@@ -214,7 +215,7 @@ function soffstart() {
         blanks = document.querySelectorAll('.blank')
     }
 
-    function save() {
+    function save(id = 2) {
         let board = [[], [], [], []]
         tiles.forEach(tile => {
             let i = tile.parentNode.getAttribute('row-id')
@@ -224,7 +225,7 @@ function soffstart() {
 
         let game_over = checkGameOver()
 
-        fetch(`http://localhost:3000/games/2`, {
+        fetch(`http://localhost:3000/games/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -235,7 +236,6 @@ function soffstart() {
             .then(r => r.json())
             .then(console.log)
         //don't need to do anything with saved board because we already updated the dom optimistically
-
     }
 
     function checkGameOver() {
