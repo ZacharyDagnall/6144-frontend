@@ -14,7 +14,7 @@ TO-DONE List
 
 
 TO-DO list
-** what to do when game over
+** what to do when game over !!
 * picking up a game where you left off
 * signing in
 * new game
@@ -26,11 +26,17 @@ TO-DO list
 ** make stuff pretty
 
 
-
+Doably Stretchy
 All "Grid" Games?
 ** 2048
 ** TicTacToe
+** Connect 4
+** Lights Out
+Maybe:
 ** BattleShip
-** Connect 4 (very similar logic to TTT)
-** Checkers? harder...
-** 
+** Memory
+
+
+*** refactor / put some repeat code into methods !
+*** put repeat methods into index.js instead of in the individual games
+***** rename similarly named methods
