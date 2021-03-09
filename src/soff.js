@@ -2,7 +2,7 @@
 // document.addEventListener("click", e => {
 //     if (e.target == soffbutton) {
 function soffstart() {
-
+    const newNums = ["3", "6"]
     const boardDiv = document.querySelector('#board')
     boardDiv.replaceChildren()
     function makeBoard() {  //create HTML items on document
@@ -111,7 +111,7 @@ function soffstart() {
     function newTile() {
         if (blanks.length !== 0) {
             let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-            randBlank.textContent = "5"
+            randBlank.textContent = newNums[Math.floor(newNums.length * Math.random())]
             randBlank.classList.remove("blank")
             randBlank.classList.add("new")
         }
@@ -223,7 +223,6 @@ function soffstart() {
         })
 
         let game_over = checkGameOver()
-        //do something about it if true
 
         fetch(`http://localhost:3000/games/2`, {
             method: 'PATCH',
@@ -241,6 +240,7 @@ function soffstart() {
 
     function checkGameOver() {
         if (blanks.length === 0 && noNeighbors()) {
+            alert("Game Over!")
             return true
         } else {
             return false
@@ -249,23 +249,38 @@ function soffstart() {
 
     function noNeighbors() {
         tiles.forEach(tile => {
-            let i = tile.parentNode.getAttribute('row-id')
-            let j = tile.getAttribute('col-id')
+            let i = parseInt(tile.parentNode.getAttribute('row-id'))
+            let j = parseInt(tile.getAttribute('col-id'))
             // odd row, then even colum, or even row and odd column
             if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
-                let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
-                let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-                let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
-                let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-                if (tile.textContent === upNeighbor.textContent || tile.textContent === downNeighbor.textContent || tile.textContent === leftNeighbor.textContent || tile.textContent === rightNeighbor.textContent) {
-                    return false
+                if (i >= 1) {
+                    let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
+                    if (tile.textContent === upNeighbor.textContent) {
+                        return false
+                    }
+                }
+                if (i <= 2) {
+                    let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
+                    if (tile.textContent === downNeighbor.textContent) {
+                        return false
+                    }
+                }
+                if (j >= 1) {
+                    let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
+                    if (tile.textContent === leftNeighbor.textContent) {
+                        return false
+                    }
+                }
+                if (j <= 2) {
+                    let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
+                    if (tile.textContent === rightNeighbor.textContent) {
+                        return false
+                    }
                 }
             }
         })
         return true
     }
-
-
 
 
 
