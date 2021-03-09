@@ -39,9 +39,10 @@ function tictactoestart() {
     }
 
     function fetchBoard() {
-        fetch(`http://localhost:3000/games/3`)
+        fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/soff`)
             .then(r => r.json())
             .then(game => {
+                gameDiv.dataset.id = game.id
                 loadBoard(game.board_state)
                 loadScore(game.score)
             })

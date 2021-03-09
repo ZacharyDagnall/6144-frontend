@@ -3,6 +3,7 @@
 //     if (e.target == soffbutton) {
 function soffstart() {
     const newNums = ["3", "6"]
+    const quitButton = document.querySelector("#quit-button")
     const boardDiv = document.querySelector('#board')
     boardDiv.replaceChildren()
     function makeBoard() {  //create HTML items on document
@@ -31,7 +32,16 @@ function soffstart() {
             })
         })
         blankZeroes()
+        if (blanks.length === 16) {
+            newTile()
+            newTile()
+        }
     }
+
+    quitButton.addEventListener("click", e => {
+        save(true)
+        alert("Game Ended!")
+    })
 
     const htmlScore = document.querySelector('#actual-score')
     function loadScore(score) {
@@ -215,15 +225,14 @@ function soffstart() {
         blanks = document.querySelectorAll('.blank')
     }
 
-    function save(id = 2) {
+    function save(game_over = checkGameOver()) {
+        let id = gameDiv.dataset.id
         let board = [[], [], [], []]
         tiles.forEach(tile => {
             let i = tile.parentNode.getAttribute('row-id')
             let j = tile.getAttribute('col-id')
             board[i][j] = tile.textContent
         })
-
-        let game_over = checkGameOver()
 
         fetch(`http://localhost:3000/games/${id}`, {
             method: 'PATCH',

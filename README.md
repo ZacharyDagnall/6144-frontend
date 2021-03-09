@@ -23,6 +23,10 @@ TO-DO list
 *** make new board
 *** load new board
 
+** delete scores
+** list of *your* scores before you click on a game
+** list of leaderboard scores when you are clicked on a game
+
 ** make stuff pretty
 
 

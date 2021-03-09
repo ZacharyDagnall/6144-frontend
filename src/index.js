@@ -77,7 +77,11 @@ document.addEventListener("click", e => {
         let divboard = document.createElement('div')
         divboard.id = "board"
 
-        gameDiv.append(div, divboard)
+        let quitButton = document.createElement("button")
+        quitButton.id = "quit-button"
+        quitButton.textContent = "Quit Game"
+
+        gameDiv.append(div, divboard, quitButton)
         if (e.target == ttt) {
             tictactoestart()
         } else {
@@ -85,3 +89,4 @@ document.addEventListener("click", e => {
         }
     }
 })
+
