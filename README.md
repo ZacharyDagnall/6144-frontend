@@ -24,3 +24,13 @@ TO-DO list
 * quit game
 
 ** make stuff pretty
+
+
+
+All "Grid" Games?
+** 2048
+** TicTacToe
+** BattleShip
+** Connect 4 (very similar logic to TTT)
+** Checkers? harder...
+** 
