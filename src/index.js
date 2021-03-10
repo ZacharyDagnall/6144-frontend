@@ -123,6 +123,7 @@ function makeNewUser(name) {
 let ttt = document.querySelector("#ttt")
 let soff = document.querySelector("#soff")
 let fibsoff = document.querySelector("#fibsoff")
+let c4 = document.querySelector("#c4")
 
 document.addEventListener("click", e => {
     if (e.target == soff) {
@@ -131,5 +132,7 @@ document.addEventListener("click", e => {
         startFibSOFF()
     } else if (e.target == ttt) {
         startTTT()
+    } else if (e.target == c4) {
+        startC4()
     }
 })

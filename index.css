@@ -19,6 +19,9 @@
     border: 5px solid black;
     margin: 10px;
 }
+/* .ex {
+ content: "❌"
+} */
 
 /* .new{
     background-color:aquamarine;    
@@ -40,6 +43,10 @@
     background-color:orange;
 } */
 
-.empty {
-    
+/* .empty {
+
+} */
+.connect {
+    width: 5px;
+    height: 5px
 }
