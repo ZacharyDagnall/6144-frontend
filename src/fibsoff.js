@@ -248,11 +248,17 @@ function moveRightFibSOFF(i, j) {
     blankZeroesFibSOFF()
 }
 function canCombine(tile1, tile2) {
+
     let a = parseInt(tile1.textContent)
     let b = parseInt(tile2.textContent)
-    let n = fibnums.indexOf(a)
-    let m = fibnums.indexOf(b)
-    return ((Math.abs(n - m) == 1) || (a == 1 && b == 1))
+    let m = fibnums.indexOf(a)
+    let n = fibnums.indexOf(b)
+
+    if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
+        console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
+    } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
+
+    return (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0)
 }
 
 function blankZeroesFibSOFF() {
@@ -302,10 +308,10 @@ function saveFibSOFF(game_over = checkGameOverFibSOFF()) {
     })
     htmlScore = document.querySelector('#score')
 
-    console.log("Before Save: ")
-    console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
-    console.log(`Board: ${board}`)
-    console.log(`Status: ${game_over}`)
+    // console.log("Before Save: ")
+    // console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
+    // console.log(`Board: ${board}`)
+    // console.log(`Status: ${game_over}`)
 
 
     fetch(`http://localhost:3000/games/${id}`, {
@@ -318,10 +324,10 @@ function saveFibSOFF(game_over = checkGameOverFibSOFF()) {
     })
         .then(r => r.json())
         .then(game => {
-            console.log("After Save: ")
-            console.log(`Score: ${game.score}`)
-            console.log(`Board: ${game.board_state}`)
-            console.log(`Status: ${game.game_over}`)
+            // console.log("After Save: ")
+            // console.log(`Score: ${game.score}`)
+            // console.log(`Board: ${game.board_state}`)
+            // console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
