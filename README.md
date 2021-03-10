@@ -15,17 +15,19 @@ TO-DONE List
 * picking up a game where you left off
 * signing in
 * new game button
+*** create request
+*** make new board
+*** load new board
+** list of *your* scores before you click on a game
+** list of leaderboard scores when you are clicked on a game
 
 
 TO-DO list
 * quit game button
-*** create request
-*** make new board
-*** load new board
+
 
 ** delete scores
-** list of *your* scores before you click on a game
-** list of leaderboard scores when you are clicked on a game
+
 
 ** make stuff pretty
 

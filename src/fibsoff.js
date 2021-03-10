@@ -1,5 +1,6 @@
 let fibbutton = document.querySelector('#fib')
 const fibnums = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
+const newFibs = [1, 1, 2]
 document.addEventListener("click", e => {
     if (e.target == fibbutton) {
 
@@ -32,6 +33,13 @@ document.addEventListener("click", e => {
             blankZeroes()
         }
 
+        function canCombine(tile1, tile2) {
+            let a = parseInt(tile1.textContent)
+            let b = parseInt(tile2.textContent)
+            let n = fibnums.indexOf(a)
+            let m = fibnums.indexOf(b)
+            return ((Math.abs(n - m) == 1) || (a == 1 && (b == 1 || b == 2)) || (b == 1 && (a == 1 || a == 2)))
+        }
         const htmlScore = document.querySelector('#actual-score')
         function loadScore(score) {
             htmlScore.textContent = score
@@ -107,10 +115,11 @@ document.addEventListener("click", e => {
             save()
         }
 
+        //different than normal SOFF just because of list pulling from for randoms
         function newTile() {
             if (blanks.length !== 0) {
                 let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-                randBlank.textContent = "5"
+                randBlank.textContent = newFibs[Math.floor(newFibs.length * Math.random())]
                 randBlank.classList.remove("blank")
                 randBlank.classList.add("new")
             }
@@ -127,8 +136,8 @@ document.addEventListener("click", e => {
                     htmlTile.textContent = 0
                     moveRight(i, j + 1)
                 } // don't check if they're the same. check if they are two adjacent numbers from the list. (should work with 5 and 8 as well as 8 and 5) 
-                else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
-                    let score = 2 * parseInt(htmlTile.textContent)
+                else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+                    let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
                     nextTile.textContent = score
                     nextTile.classList.add("smushed")
                     loadScore(parseInt(htmlScore.textContent) + score)
@@ -150,8 +159,8 @@ document.addEventListener("click", e => {
                     htmlTile.textContent = 0
                     moveLeft(i, j - 1)
                 } // don't check if they're the same. check if they are two adjacent numbers from the list. (should work with 5 and 8 as well as 8 and 5)
-                else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
-                    let score = 2 * parseInt(htmlTile.textContent)
+                else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+                    let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
                     nextTile.textContent = score
                     nextTile.classList.add("smushed")
                     loadScore(parseInt(htmlScore.textContent) + score)
@@ -173,8 +182,8 @@ document.addEventListener("click", e => {
                     htmlTile.textContent = 0
                     moveDown(i + 1, j)
                 } // don't check if they're the same. check if they are two adjacent numbers from the list. (should work with 5 and 8 as well as 8 and 5)
-                else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
-                    let score = 2 * parseInt(htmlTile.textContent)
+                else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+                    let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
                     nextTile.textContent = score
                     nextTile.classList.add("smushed")
                     loadScore(parseInt(htmlScore.textContent) + score)
@@ -196,8 +205,8 @@ document.addEventListener("click", e => {
                     htmlTile.textContent = 0
                     moveUp(i - 1, j)
                 } // don't check if they're the same. check if they are two adjacent numbers from the list. (should work with 5 and 8 as well as 8 and 5)
-                else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
-                    let score = 2 * parseInt(htmlTile.textContent)
+                else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+                    let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
                     nextTile.textContent = score
                     nextTile.classList.add("smushed")
                     loadScore(parseInt(htmlScore.textContent) + score)
@@ -260,6 +269,7 @@ document.addEventListener("click", e => {
                     let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
                     let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
                     let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
+                    // this needs to be fixed just like normal SOFF successfully was, but don't forget to use CAN COMBINE instead of ===
                     if (tile.textContent === upNeighbor.textContent || tile.textContent === downNeighbor.textContent || tile.textContent === leftNeighbor.textContent || tile.textContent === rightNeighbor.textContent) {
                         return false
                     }

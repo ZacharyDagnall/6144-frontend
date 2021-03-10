@@ -2,7 +2,6 @@
     <link href="./index.css" type="text/css" rel="stylesheet">
     <script src="./src/index.js" defer></script>
     <script src="./src/soff.js" defer></script>
-    <script src="./src/tictactoe.js" defer></script>
 
 </head>
 
@@ -12,9 +11,20 @@
 
     <h3 id="welcome" data-id="">Welcome!</h3>
 
-    <button id="ttt"> Tic-Tac-Toe ! </button>
-    <button id="soff"> 6144 </button>
+    <div id="game-buttons" class="hidden">
+        <button id="ttt"> Tic-Tac-Toe ! </button>
+        <button id="soff"> 6144 </button>
+    </div>
 
+    <div id="game" class="hidden">
+        <div id="score">
+        </div>
+        <div id="board">
+        </div>
+    </div>
 
-    <div id="game"></div>
+    <div id="scores">
+        <ul id="scores-list">
+        </ul>
+    </div>
 </body>

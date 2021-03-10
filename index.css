@@ -27,3 +27,7 @@
 .blank {
     visibility: hidden;
 }
+
+.hidden{
+    display: none;
+}

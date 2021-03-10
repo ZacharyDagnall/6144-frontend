@@ -24,6 +24,7 @@ function makeLogin() {
 
 function login() {
     let login = makeLogin()
+    let buttons = document.querySelector("#game-buttons")
     login.addEventListener("submit", e => {
         e.preventDefault()
         let username = e.target.name.value
@@ -37,13 +38,32 @@ function login() {
                 else {
                     makeNewUser(username)
                 }
+                login.classList.add("hidden")
+                buttons.classList.remove("hidden")
             })
     })
+}
+
+function myScores(id) {
+    let scoresList = document.querySelector("#scores-list")
+    scoresList.replaceChildren()
+    scoresList.textContent = "My Scores:"
+    fetch(`http://localhost:3000/users/${id}/scores`)
+        .then(r => r.json())
+        .then(scores => {
+            scores.forEach(score => {
+                console.log(score)
+                let li = document.createElement("li")
+                li.textContent = score
+                scoresList.append(li)
+            })
+        })
 }
 
 function welcomeUser(user) {
     welcome.textContent = `Welcome ${user.name}`
     welcome.dataset.id = user.id
+    myScores(user.id)
 }
 
 function makeNewUser(name) {
@@ -66,27 +86,7 @@ let soff = document.querySelector("#soff")
 // let script = document.getElementsByTagName("script")[0]
 
 document.addEventListener("click", e => {
-    if (e.target == ttt || e.target == soff) {
-        gameDiv.replaceChildren()
-        let div = document.createElement('div')
-        div.textContent = "Your current Score:"
-        let div2 = document.createElement('div')
-        div2.id = "actual-score"
-        div.append(div2)
-
-        let divboard = document.createElement('div')
-        divboard.id = "board"
-
-        let quitButton = document.createElement("button")
-        quitButton.id = "quit-button"
-        quitButton.textContent = "Quit Game"
-
-        gameDiv.append(div, divboard, quitButton)
-        if (e.target == ttt) {
-            tictactoestart()
-        } else {
-            soffstart()
-        }
+    if (e.target == soff) {
+        startSoff()
     }
 })
-
