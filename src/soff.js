@@ -301,8 +301,8 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
     let id = gameDiv.dataset.id
     let board = [[], [], [], []]
     tiles.forEach(tile => {
-        let i = tile.parentNode.getAttribute('row-id')
-        let j = tile.getAttribute('col-id')
+        let i = parseInt(tile.parentNode.getAttribute('row-id'))
+        let j = parseInt(tile.getAttribute('col-id'))
         board[i][j] = tile.textContent
     })
     htmlScore = document.querySelector('#score')
