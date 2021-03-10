@@ -31,11 +31,11 @@ TO-DO list
 
 Doably Stretchy
 All "Grid" Games
-** 6144
+** 6144                 (6144 and variants start with 0 and build up to a high score)
 **** Fib6144 - Zak
-** TicTacToe - Zak
+** TicTacToe - Zak     (TTT and Connect 4 have to start with a medium number score and deduct points with each move)
 ** Connect 4 - Zak
-** Lights Out - Pat
+** Lights Out - Pat     (Lights Out should start with a high number score and deduct points with each move)
 Maybe:
 ** BattleShip
 ** Memory

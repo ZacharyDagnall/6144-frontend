@@ -129,5 +129,7 @@ document.addEventListener("click", e => {
         startSOFF()
     } else if (e.target == fibsoff) {
         startFibSOFF()
+    } else if (e.target == ttt) {
+        startTTT()
     }
 })
