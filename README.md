@@ -25,7 +25,7 @@ TO-DONE List
 ** change on backend names of games ("soff" = 6144)
 
 TO-DO list
-
+* what to do when game over, after alert is closed (doesn't quite work right now?) 
 ** make stuff pretty (Thursday) (CSS)
 
 
