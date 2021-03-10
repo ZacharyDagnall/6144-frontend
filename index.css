@@ -3,7 +3,7 @@
     flex-wrap: wrap; 
     width: 450px;
     height: 450px;
-    background-color: yellow;
+    background-color: grey;
 }
 
 .row {
@@ -20,9 +20,9 @@
     margin: 10px;
 }
 
-.new{
+/* .new{
     background-color:aquamarine;    
-}
+} */
 
 .blank {
     visibility: hidden;
@@ -31,3 +31,11 @@
 .hidden{
     display: none;
 }
+
+/* .t6 {
+    background-color:red;
+}
+
+.t3{
+    background-color:orange;
+} */

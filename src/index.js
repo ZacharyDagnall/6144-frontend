@@ -50,20 +50,59 @@ function myScores(id) {
     scoresList.textContent = "My Scores:"
     fetch(`http://localhost:3000/users/${id}/scores`)
         .then(r => r.json())
-        .then(scores => {
-            scores.forEach(score => {
-                console.log(score)
+        .then(gameHashes => {
+            gameHashes.forEach(gameHash => {
+                console.log(gameHash)
                 let li = document.createElement("li")
-                li.textContent = score
+                li.textContent = `Game: ${gameHash.name}, Score: ${gameHash.score}`
+                li.dataset.id = gameHash.id
                 scoresList.append(li)
+                let dltbtn = document.createElement('button')
+                li.append(dltbtn)
+                dltbtn.textContent = "x"
+                dltbtn.addEventListener("click", event => deleteScore(gameHash.id))
             })
         })
+}
+function deleteScore(id) {
+    fetch(`http://localhost:3000/games/${id}`, {
+        method: "DELETE"
+    })
+        .then(r => r.json())
+        .then(emptyGame => {
+            let scoresList = document.querySelector("#scores-list")
+            let li = scoresList.querySelector(`[data-id="${id}"]`)
+            li.remove()
+        })
+}
+
+function goodbyeUser() {
+    welcome.textContent = `Welcome!`
+    welcome.dataset.id = ""
+
+    let scoresList = document.querySelector("#scores-list")
+    scoresList.replaceChildren()
+    scoresList.textContent = ""
+
+    let buttons = document.querySelector("#game-buttons")
+    buttons.classList.add("hidden")
+
+    let logout = document.querySelector("#logout")
+    logout.classList.add("hidden")
+
+    let loginEl = document.querySelector("#login-form")
+    loginEl.remove()
+    login()
 }
 
 function welcomeUser(user) {
     welcome.textContent = `Welcome ${user.name}`
     welcome.dataset.id = user.id
     myScores(user.id)
+    let logout = document.querySelector("#logout")
+    logout.classList.remove("hidden")
+    logout.removeEventListener("click", goodbyeUser)
+    logout.addEventListener("click", goodbyeUser)
 }
 
 function makeNewUser(name) {
@@ -83,10 +122,12 @@ function makeNewUser(name) {
 
 let ttt = document.querySelector("#ttt")
 let soff = document.querySelector("#soff")
-// let script = document.getElementsByTagName("script")[0]
+let fibsoff = document.querySelector("#fibsoff")
 
 document.addEventListener("click", e => {
     if (e.target == soff) {
-        startSoff()
+        startSOFF()
+    } else if (e.target == fibsoff) {
+        startFibSOFF()
     }
 })

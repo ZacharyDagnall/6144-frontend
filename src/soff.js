@@ -1,16 +1,20 @@
 
-const newNums = ["3", "6"]
+const newSOFFNums = ["3", "6"]
 let tiles;
 let blanks;
 let htmlScore;
 
-function startSoff() {  //create HTML items on document
+function startSOFF() {  //create HTML items on document
     gameDiv.innerHTML = `<div id="score"> Your Current Score:
                                 <div id="actual score"></div>
                         </div>
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    let buttons = document.querySelector("#game-buttons")
+    buttons.classList.add("hidden")
+    let logoutButton = document.querySelector("#logout")
+    logoutButton.classList.add("hidden")
     let boardDiv = document.querySelector('#board')
     for (let i = 0; i < 4; i++) {
         const row = document.createElement('div')
@@ -29,21 +33,23 @@ function startSoff() {  //create HTML items on document
     gameDiv.append(quitButton)
     quitButton.id = "quit-button"
     quitButton.textContent = "Quit Game"
-    fillScores()
-    document.removeEventListener("keydown", handleSoffKey)
-    document.addEventListener("keydown", handleSoffKey)
-    fetchBoard()
+    quitButton.removeEventListener("click", handleQuitSOFF)
+    quitButton.addEventListener("click", handleQuitSOFF)
+    fillScoresSOFF()
+    document.removeEventListener("keydown", handleSOFFKey)
+    document.addEventListener("keydown", handleSOFFKey)
+    fetchBoardSOFF()
 }
-function fetchBoard() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/soff`)
+function fetchBoardSOFF() {
+    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/6144`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
-            loadBoard(game.board_state)
-            loadScore(game.score)
+            loadBoardSOFF(game.board_state)
+            loadScoreSOFF(game.score)
         })
 }
-function loadBoard(board) {  //render board (new or updated)
+function loadBoardSOFF(board) {  //render board (new or updated)
     board.forEach((row, i) => {
         let htmlRow = document.querySelector(`[row-id="${i}"]`)
         row.forEach((col, j) => {
@@ -54,22 +60,22 @@ function loadBoard(board) {  //render board (new or updated)
             }
         })
     })
-    blankZeroes()
+    blankZeroesSOFF()
     if (blanks.length === 16) {
-        newTile()
-        newTile()
+        newTileSOFF()
+        newTileSOFF()
     }
 }
-function loadScore(score) {
+function loadScoreSOFF(score) {
     htmlScore = document.querySelector('#score')
     htmlScore.firstElementChild.textContent = score
 }
 
-function fillScores() {
+function fillScoresSOFF() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
-    scoresList.textContent = "This Game's Scores:"
-    fetch(`http://localhost:3000/games/soff/leaderboard`)
+    scoresList.textContent = "6144 Scores:"
+    fetch(`http://localhost:3000/games/6144/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -80,67 +86,92 @@ function fillScores() {
         })
 }
 
-function handleSoffKey(event) {
+function handleSOFFKey(event) {
     tiles.forEach(tile => {
         tile.classList.remove("smushed")
-        tile.classList.remove("new")
     })
     if (event.key.startsWith("Arrow")) {
         event.preventDefault()
     }
     if (event.key === "ArrowUp") {
-        swipeUp()
+        swipeUpSOFF()
     } else if (event.key === "ArrowDown") {
-        swipeDown()
+        swipeDownSOFF()
     } else if (event.key === "ArrowLeft") {
-        swipeLeft()
+        swipeLeftSOFF()
     } else if (event.key === "ArrowRight") {
-        swipeRight()
+        swipeRightSOFF()
     }
 }
+function handleQuitSOFF() {
+    saveSOFF(true)
+    document.removeEventListener("keydown", handleSOFFKey)
 
-function swipeUp() {
+    alert("Game Ended! (You quitter)")
+    gameDiv.classList.add("hidden")
+
+    let buttons = document.querySelector("#game-buttons")
+    buttons.classList.remove("hidden")
+
+    let logoutButton = document.querySelector("#logout")
+    logoutButton.classList.remove("hidden")
+    myScores(welcome.dataset.id)
+}
+function handleGameOverSOFF() {
+    document.removeEventListener("keydown", handleSOFFKey)
+
+    gameDiv.classList.add("hidden")
+
+    let buttons = document.querySelector("#game-buttons")
+    buttons.classList.remove("hidden")
+
+    let logoutButton = document.querySelector("#logout")
+    logoutButton.classList.remove("hidden")
+    myScores(welcome.dataset.id)
+}
+
+function swipeUpSOFF() {
     console.log("swiped up!")
     for (let j = 0; j < 4; j++) {
         for (let i = 0; i < 4; i++) {
-            moveUp(i, j)
+            moveUpSOFF(i, j)
         }
     }
-    newTile()
-    save()
+    newTileSOFF()
+    saveSOFF()
 }
-function swipeDown() {
+function swipeDownSOFF() {
     console.log("swiped down!")
     for (let j = 0; j < 4; j++) {
         for (let i = 3; i >= 0; i--) {
-            moveDown(i, j)
+            moveDownSOFF(i, j)
         }
     }
-    newTile()
-    save()
+    newTileSOFF()
+    saveSOFF()
 }
-function swipeLeft() {
+function swipeLeftSOFF() {
     console.log("swiped left!")
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            moveLeft(i, j)
+            moveLeftSOFF(i, j)
         }
     }
-    newTile()
-    save()
+    newTileSOFF()
+    saveSOFF()
 }
-function swipeRight() {
+function swipeRightSOFF() {
     console.log("swiped right!")
     for (let i = 0; i < 4; i++) {
         for (let j = 3; j >= 0; j--) {
-            moveRight(i, j)
+            moveRightSOFF(i, j)
         }
     }
-    newTile()
-    save()
+    newTileSOFF()
+    saveSOFF()
 }
 
-function moveUp(i, j) {
+function moveUpSOFF(i, j) {
     if (i !== 0) {
         let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
         let nextTile = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
@@ -149,20 +180,20 @@ function moveUp(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveUp(i - 1, j)
+            moveUpSOFF(i - 1, j)
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
-            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
+            loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveUp(i - 1, j)
+            moveUpSOFF(i - 1, j)
         }
     }
-    blankZeroes()
+    blankZeroesSOFF()
 }
-function moveDown(i, j) {
+function moveDownSOFF(i, j) {
     if (i !== 3) {
         let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
         let nextTile = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
@@ -171,20 +202,20 @@ function moveDown(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveDown(i + 1, j)
+            moveDownSOFF(i + 1, j)
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
-            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
+            loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveDown(i + 1, j)
+            moveDownSOFF(i + 1, j)
         }
     }
-    blankZeroes()
+    blankZeroesSOFF()
 }
-function moveLeft(i, j) {
+function moveLeftSOFF(i, j) {
     if (j !== 0) {
         let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
         let nextTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
@@ -193,20 +224,20 @@ function moveLeft(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveLeft(i, j - 1)
+            moveLeftSOFF(i, j - 1)
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
-            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
+            loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveLeft(i, j - 1)
+            moveLeftSOFF(i, j - 1)
         }
     }
-    blankZeroes()
+    blankZeroesSOFF()
 }
-function moveRight(i, j) {
+function moveRightSOFF(i, j) {
     if (j !== 3) {
         let htmlTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
         let nextTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
@@ -215,40 +246,58 @@ function moveRight(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveRight(i, j + 1)
+            moveRightSOFF(i, j + 1)
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
-            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
+            loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveRight(i, j + 1)
+            moveRightSOFF(i, j + 1)
         }
     }
-    blankZeroes()
+    blankZeroesSOFF()
 }
 
-function blankZeroes() {
+function blankZeroesSOFF() {
     tiles.forEach(tile => {
         if (tile.textContent === "0") {
             tile.classList.add("blank")
+        } else {
+            tile.style.backgroundColor = getColorSOFF(parseInt(tile.textContent))
         }
     })
     blanks = document.querySelectorAll('.blank')
 }
 
-function newTile() {
-    if (blanks.length !== 0) {
-        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-        randBlank.textContent = newNums[Math.floor(newNums.length * Math.random())]
-        randBlank.classList.remove("blank")
-        randBlank.classList.add("new")
+function getColorSOFF(val) {
+    switch (val) {
+        case 3: return "#F6CED8"
+        case 6: return "#F7BE81"
+        case 12: return "#F3F781"
+        case 24: return "#58D3F7"
+        case 48: return "#A901DB"
+        case 96: return "#01DF3A"
+        case 192: return "#D7DF01"
+        case 384: return "#4287F5"
+        case 768: return "#8DF542"
+        case 1536: return "#F5427B"
+        case 3072: return "#F5A142"
+        case 6144: return "#42F5E3"
     }
-    blankZeroes()
 }
 
-function save(game_over = checkGameOver()) {
+function newTileSOFF() {
+    if (blanks.length !== 0) {
+        let randBlank = blanks[Math.floor(blanks.length * Math.random())]
+        randBlank.textContent = newSOFFNums[Math.floor(newSOFFNums.length * Math.random())]
+        randBlank.classList.remove("blank")
+    }
+    blankZeroesSOFF()
+}
+
+function saveSOFF(game_over = checkGameOverSOFF()) {
     let id = gameDiv.dataset.id
     let board = [[], [], [], []]
     tiles.forEach(tile => {
@@ -261,6 +310,7 @@ function save(game_over = checkGameOver()) {
     console.log("Before Save: ")
     console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
     console.log(`Board: ${board}`)
+    console.log(`Status: ${game_over}`)
 
 
     fetch(`http://localhost:3000/games/${id}`, {
@@ -276,50 +326,59 @@ function save(game_over = checkGameOver()) {
             console.log("After Save: ")
             console.log(`Score: ${game.score}`)
             console.log(`Board: ${game.board_state}`)
+            console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
 
-function checkGameOver() {
-    if (blanks.length === 0 && noNeighbors()) {
+function checkGameOverSOFF() {
+    if (blanks.length === 0 && noNeighborsSOFF()) {
         alert("Game Over!")
+        // handleGameOverSOFF()
         return true
     } else {
         return false
     }
 }
 
-function noNeighbors() {
-    tiles.forEach(tile => {
+function noNeighborsSOFF() {
+    for (let count = 0; count < tiles.length; count++) {
+        let tile = tiles[count]
+
         let i = parseInt(tile.parentNode.getAttribute('row-id'))
         let j = parseInt(tile.getAttribute('col-id'))
-        // odd row, then even colum, or even row and odd column // also - not blank!!
-        if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1) && !tile.classList.contains("blank")) {
+        // odd row, then even colum, or even row and odd column // also - not blank!! 
+        if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
             if (i >= 1) {
                 let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
                 if (tile.textContent === upNeighbor.textContent) {
+                    console.log("found a pair!", tile, upNeighbor, tile.classList, !tile.classList.contains("blank"))
                     return false
                 }
             }
             if (i <= 2) {
                 let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
                 if (tile.textContent === downNeighbor.textContent) {
+                    console.log("found a pair!", tile, downNeighbor)
                     return false
                 }
             }
             if (j >= 1) {
                 let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
                 if (tile.textContent === leftNeighbor.textContent) {
+                    console.log("found a pair!", tile, leftNeighbor)
                     return false
                 }
             }
             if (j <= 2) {
                 let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
                 if (tile.textContent === rightNeighbor.textContent) {
+                    console.log("found a pair!", tile, rightNeighbor)
                     return false
                 }
             }
         }
-    })
+
+    }
     return true
 }

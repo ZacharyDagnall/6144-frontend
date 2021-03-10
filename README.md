@@ -20,24 +20,22 @@ TO-DONE List
 *** load new board
 ** list of *your* scores before you click on a game
 ** list of leaderboard scores when you are clicked on a game
-
+**delete button for a score
+**quit button
+** change on backend names of games ("soff" = 6144)
 
 TO-DO list
-* quit game button
 
-
-** delete scores
-
-
-** make stuff pretty
+** make stuff pretty (Thursday) (CSS)
 
 
 Doably Stretchy
-All "Grid" Games?
-** 2048
-** TicTacToe
-** Connect 4
-** Lights Out
+All "Grid" Games
+** 6144
+**** Fib6144 - Zak
+** TicTacToe - Zak
+** Connect 4 - Zak
+** Lights Out - Pat
 Maybe:
 ** BattleShip
 ** Memory
