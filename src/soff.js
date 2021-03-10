@@ -2,9 +2,11 @@
 const newNums = ["3", "6"]
 let tiles;
 let blanks;
+let htmlScore;
 
 function startSoff() {  //create HTML items on document
-    gameDiv.innerHTML = `<div id="score">
+    gameDiv.innerHTML = `<div id="score"> Your Current Score:
+                                <div id="actual score"></div>
                         </div>
                         <div id="board">
                         </div>`
@@ -58,9 +60,9 @@ function loadBoard(board) {  //render board (new or updated)
         newTile()
     }
 }
-const htmlScore = document.querySelector('#score')
 function loadScore(score) {
-    htmlScore.textContent = `Your Current Score: ${score}`
+    htmlScore = document.querySelector('#score')
+    htmlScore.firstElementChild.textContent = score
 }
 
 function fillScores() {
@@ -152,7 +154,8 @@ function moveUp(i, j) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
-            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlScore = document.querySelector('#score')
+            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
             moveUp(i - 1, j)
         }
@@ -173,7 +176,8 @@ function moveDown(i, j) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
-            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlScore = document.querySelector('#score')
+            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
             moveDown(i + 1, j)
         }
@@ -194,7 +198,8 @@ function moveLeft(i, j) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
-            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlScore = document.querySelector('#score')
+            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
             moveLeft(i, j - 1)
         }
@@ -215,7 +220,8 @@ function moveRight(i, j) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
-            loadScore(parseInt(htmlScore.textContent) + score)
+            htmlScore = document.querySelector('#score')
+            loadScore(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
             moveRight(i, j + 1)
         }
@@ -250,6 +256,12 @@ function save(game_over = checkGameOver()) {
         let j = tile.getAttribute('col-id')
         board[i][j] = tile.textContent
     })
+    htmlScore = document.querySelector('#score')
+
+    console.log("Before Save: ")
+    console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
+    console.log(`Board: ${board}`)
+
 
     fetch(`http://localhost:3000/games/${id}`, {
         method: 'PATCH',
@@ -257,10 +269,14 @@ function save(game_over = checkGameOver()) {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ board_state: board, score: parseInt(htmlScore.textContent), game_over })
+        body: JSON.stringify({ board_state: board, score: parseInt(htmlScore.firstElementChild.textContent), game_over })
     })
         .then(r => r.json())
-        .then(console.log)
+        .then(game => {
+            console.log("After Save: ")
+            console.log(`Score: ${game.score}`)
+            console.log(`Board: ${game.board_state}`)
+        })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
 
