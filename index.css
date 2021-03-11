@@ -19,13 +19,6 @@
     border: 5px solid black;
     margin: 10px;
 }
-/* .ex {
- content: "❌"
-} */
-
-/* .new{
-    background-color:aquamarine;    
-} */
 
 .blank {
     visibility: hidden;
@@ -35,17 +28,6 @@
     display: none;
 }
 
-/* .t6 {
-    background-color:red;
-}
-
-.t3{
-    background-color:orange;
-} */
-
-/* .empty {
-
-} */
 .connect {
     width: 5px;
     height: 5px
