@@ -2,18 +2,18 @@
 
 
 const newBugSOFFNums = ["3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6"]
-// const bugs = ["🐛", "🐜", "🦗", "🦟", "🕷", "🦂"]
-const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410)]
+// const bugs = ["🐛", "🐜", "🦗", "🦟", "🕷", "🦂","🐜", "🦗", "🦟", "🦗", "🦟","🕷"] //  1 CP, 2 ants, 3 crickets, 3 mosquitos, 2 spiders, and 1 scorpion
+const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375)]
 const bugSquashNums = [6, 12, 24, 48, 96, 192]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 function printBugCheatSheet() {
-    let str = "When a bug appears, controls will  be reversed. \n You need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
-    bugs.forEach((bug, i) => {
-        str += `${bug}: ${bugSquashNums[i]} \n`
-    })
+    let str = "When a bug appears, controls will  be reversed. \nYou need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
+    for (let count = 0; count < 6; count++) {
+        str += `${bugs[count]}: ${bugSquashNums[count]} \n`
+    }
     console.log(str)
 }
 
@@ -158,6 +158,9 @@ function swipeUpBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeDownBugSOFF() {
     console.log("swiped down!")
@@ -168,6 +171,9 @@ function swipeDownBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeLeftBugSOFF() {
     console.log("swiped left!")
@@ -178,6 +184,9 @@ function swipeLeftBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeRightBugSOFF() {
     console.log("swiped right!")
@@ -188,6 +197,9 @@ function swipeRightBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 
 function moveUpBugSOFF(i, j) {
@@ -300,13 +312,17 @@ function canCombineBugSOFF(tile1, tile2) {
 function squashBug(brick, bug) {
     incrementScoreBugSOFF(3 * parseInt(brick.textContent))  //big pay off because this is hard
 
+    //need these for alert, before they are changed
+    let bugText = bug.textContent
+    let brickText = brick.textContent
+
     //replace bug tile with brick
     bug.textContent = brick.textContent
     brick.textContent = 0
     bug.classList.remove("bug")
     bug.classList.add("smushed")
 
-    alert(`Bug Squashed! ${String.fromCodePoint(128165)}`) // 💥
+    sleep(150).then(() => { alert(`A ${bugText} bug was ${String.fromCodePoint(128165)}squashed${String.fromCodePoint(128165)} by a ${brickText} tile!! Great job!`) }) // 💥
 
     bugCheck() // check for remaining bugs and update mirror-mode accordingly
 
@@ -423,7 +439,16 @@ function bugCheck() {
 
 function checkGameOverBugSOFF() {
     if (blanks.length === 0 && noNeighborsBugSOFF()) {
-        alert("Game Over!")
+        sleep(200).then(() => {
+            alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
+            document.removeEventListener("keydown", handleSOFFKey)
+            let buttons = document.querySelector("#game-buttons")
+            buttons.classList.remove("hidden")
+            gameDiv.classList.add("hidden")
+            let logoutButton = document.querySelector("#logout")
+            logoutButton.classList.remove("hidden")
+            myScores(welcome.dataset.id)
+        })
         return true
     } else {
         return false

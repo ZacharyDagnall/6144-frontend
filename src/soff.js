@@ -118,18 +118,6 @@ function handleQuitSOFF() {
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
 }
-function handleGameOverSOFF() {
-    document.removeEventListener("keydown", handleSOFFKey)
-
-    gameDiv.classList.add("hidden")
-
-    let buttons = document.querySelector("#game-buttons")
-    buttons.classList.remove("hidden")
-
-    let logoutButton = document.querySelector("#logout")
-    logoutButton.classList.remove("hidden")
-    myScores(welcome.dataset.id)
-}
 
 function swipeUpSOFF() {
     console.log("swiped up!")
@@ -308,10 +296,10 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
     })
     htmlScore = document.querySelector('#score')
 
-    console.log("Before Save: ")
-    console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
-    console.log(`Board: ${board}`)
-    console.log(`Status: ${game_over}`)
+    // console.log("Before Save: ")
+    // console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
+    // console.log(`Board: ${board}`)
+    // console.log(`Status: ${game_over}`)
 
 
     fetch(`http://localhost:3000/games/${id}`, {
@@ -324,22 +312,26 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
     })
         .then(r => r.json())
         .then(game => {
-            console.log("After Save: ")
-            console.log(`Score: ${game.score}`)
-            console.log(`Board: ${game.board_state}`)
-            console.log(`Status: ${game.game_over}`)
+            // console.log("After Save: ")
+            // console.log(`Score: ${game.score}`)
+            // console.log(`Board: ${game.board_state}`)
+            // console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
 
 function checkGameOverSOFF() {
     if (blanks.length === 0 && noNeighborsSOFF()) {
-        alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + "Wow!!")
-        document.removeEventListener("keydown", handleSOFFKey)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        // handleGameOverSOFF()
+        sleep(200).then(() => {
+            alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
+            document.removeEventListener("keydown", handleSOFFKey)
+            let buttons = document.querySelector("#game-buttons")
+            buttons.classList.remove("hidden")
+            gameDiv.classList.add("hidden")
+            let logoutButton = document.querySelector("#logout")
+            logoutButton.classList.remove("hidden")
+            myScores(welcome.dataset.id)
+        })
         return true
     } else {
         return false
@@ -357,28 +349,24 @@ function noNeighborsSOFF() {
             if (i >= 1) {
                 let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
                 if (tile.textContent === upNeighbor.textContent) {
-                    console.log("found a pair!", tile, upNeighbor, tile.classList, !tile.classList.contains("blank"))
                     return false
                 }
             }
             if (i <= 2) {
                 let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
                 if (tile.textContent === downNeighbor.textContent) {
-                    console.log("found a pair!", tile, downNeighbor)
                     return false
                 }
             }
             if (j >= 1) {
                 let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
                 if (tile.textContent === leftNeighbor.textContent) {
-                    console.log("found a pair!", tile, leftNeighbor)
                     return false
                 }
             }
             if (j <= 2) {
                 let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
                 if (tile.textContent === rightNeighbor.textContent) {
-                    console.log("found a pair!", tile, rightNeighbor)
                     return false
                 }
             }

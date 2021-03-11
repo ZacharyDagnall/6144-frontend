@@ -55,7 +55,6 @@ function myScores(id) {
         .then(r => r.json())
         .then(gameHashes => {
             gameHashes.forEach(gameHash => {
-                console.log(gameHash)
                 let li = document.createElement("li")
                 li.textContent = `Game: ${gameHash.name}, Score: ${gameHash.score}`
                 li.dataset.id = gameHash.id

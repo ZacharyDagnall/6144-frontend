@@ -91,7 +91,7 @@ function handleTTTClick(event) {
 
 function handleQuitTTT() {
     saveTTT(true)
-    document.removeEventListener("keydown", handleTTTClick)
+    document.removeEventListener("click", handleTTTClick)
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
@@ -104,7 +104,7 @@ function handleQuitTTT() {
     myScores(welcome.dataset.id)
 }
 function handleGameOverTTT() {
-    document.removeEventListener("keydown", handleTTTClick)
+    document.removeEventListener("click", handleTTTClick)
 
     gameDiv.classList.add("hidden")
 
@@ -126,11 +126,9 @@ function placeTokenTTT(token, tile) {
     tile.classList.add("ex")
     tile.classList.add("ocupado")
     blanks = document.querySelectorAll('.empty')
-    sleep(1100).then(() => { randOTTT() });
+    sleep(700).then(() => { randOTTT() });
     blankZeroesTTT()
     incrementScoreTTT(-10)
-    console.log("tile clicked, your move")
-    // saveTTT()
 }
 
 function randOTTT() {
@@ -151,7 +149,6 @@ function blankZeroesTTT() {
         if (tile.textContent === "0") {
             tile.classList.add("empty")
         } else {
-            console.log("trying to get a color", tile.textContent)
             tile.style.backgroundColor = getColorTTT(tile.textContent)
         }
     })
@@ -175,10 +172,10 @@ function saveTTT(game_over = checkGameOverTTT()) {
     })
     htmlScore = document.querySelector('#score')
 
-    console.log("Before Save: ")
-    console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
-    console.log(`Board: ${board}`)
-    console.log(`Status: ${game_over}`)
+    // console.log("Before Save: ")
+    // console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
+    // console.log(`Board: ${board}`)
+    // console.log(`Status: ${game_over}`)
 
 
     fetch(`http://localhost:3000/games/${id}`, {
@@ -191,10 +188,10 @@ function saveTTT(game_over = checkGameOverTTT()) {
     })
         .then(r => r.json())
         .then(game => {
-            console.log("After Save: ")
-            console.log(`Score: ${game.score}`)
-            console.log(`Board: ${game.board_state}`)
-            console.log(`Status: ${game.game_over}`)
+            // console.log("After Save: ")
+            // console.log(`Score: ${game.score}`)
+            // console.log(`Board: ${game.board_state}`)
+            // console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
@@ -205,7 +202,10 @@ function checkGameOverTTT() {
         return true
     } else if (blanks.length === 0) {
         //stale mate, it's a draw. Do something.
-        alert("Stale Mate :/")
+        sleep(500).then(() => {
+            alert("Stale Mate :/")
+            handleGameOverTTT()
+        })
         return true
     }
     return false
@@ -214,24 +214,20 @@ function checkGameOverTTT() {
 function tictactoe() {
     if (threeInARowTTT("ex")) {
         // you win!
-        alert("You Won! :D")
-        incrementScoreTTT(50)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        document.removeEventListener("click", handleTTTClick)
-        handleGameOverTTT()
+        sleep(500).then(() => {
+            alert("You Won! :D")
+            incrementScoreTTT(50)
+            handleGameOverTTT()
+        })
         return true
     }
     else if (threeInARowTTT("oh")) {
         // you lose!
-        alert("You Lost! :(")
-        incrementScoreTTT(-50)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        document.removeEventListener("click", handleTTTClick)
-        handleGameOverTTT()
+        sleep(500).then(() => {
+            alert("You Lost! :(")
+            incrementScoreTTT(-50)
+            handleGameOverTTT()
+        })
         return true
     }
     // else nothing; game continues
@@ -245,12 +241,10 @@ function threeInARowTTT(symb) {
 
         let i = parseInt(tile.parentNode.getAttribute('row-id'))
         let j = parseInt(tile.getAttribute('col-id'))
-        console.log("indices:", i, j)
         if ((i == 0 || i == 2) && j == 1) {
             //check left and right
             let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
             let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-            console.log(leftNeighbor, rightNeighbor)
             if (leftNeighbor.classList.contains(symb) && rightNeighbor.classList.contains(symb)) {
                 return true
             }
@@ -258,7 +252,6 @@ function threeInARowTTT(symb) {
             //check up and down
             let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
             let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-            console.log(upNeighbor, downNeighbor)
             if (upNeighbor.classList.contains(symb) && downNeighbor.classList.contains(symb)) {
                 return true
             }

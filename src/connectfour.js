@@ -85,16 +85,17 @@ function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
         dropTokenC4(String.fromCodePoint(10060), tile)          // ❌  
-        sleepC4(1100).then(() => { randOC4() });
+        sleep(700).then(() => { randOC4() });
         blankZeroesC4()
         incrementScoreC4(-20)
-        saveC4()
+        //saveC4()
+        checkGameOverC4()
     }
 }
 
 function handleQuitC4() {
     saveC4(true)
-    document.removeEventListener("keydown", handleC4Click)
+    document.removeEventListener("click", handleC4Click)
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
@@ -107,7 +108,7 @@ function handleQuitC4() {
     myScores(welcome.dataset.id)
 }
 function handleGameOverC4() {
-    document.removeEventListener("keydown", handleC4Click)
+    document.removeEventListener("click", handleC4Click)
 
     gameDiv.classList.add("hidden")
 
@@ -119,23 +120,20 @@ function handleGameOverC4() {
     myScores(welcome.dataset.id)
 }
 
-function sleepC4(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function dropTokenC4(token, tile) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    if (i === 6) {          //if already at the bottom, just placeToken here
-        placeTokenC4(token, tile)
-    } else {                //not at the bottom, let's check the spot below
+    placeTokenC4(token, tile)
+    if (i < 6) {                //not at the bottom, let's check the spot below
         let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-        if (downNeighbor.classList.contains('ocupado')) {   //the one below us is full, so placeToken here
-            placeTokenC4(token, tile)
-        } else {                            //spot below us is empty, so keep falling (recursive call)
-            dropTokenC4(token, downNeighbor)
+        if (!downNeighbor.classList.contains('ocupado')) {   //the one below us is empty, so remove and keep falling 
+            sleep(90).then(() => {
+                removeTokenC4(token, tile)
+                dropTokenC4(token, downNeighbor)
+            })
         }
     }
+    // else, either you're at the bottom or the spot below is occupied - so place here and stop.
 }
 
 function placeTokenC4(token, tile) {
@@ -147,7 +145,18 @@ function placeTokenC4(token, tile) {
         tile.classList.add("oh")
     }
     tile.classList.add("ocupado")
-    blanks = document.querySelectorAll('.empty')
+    blankZeroesC4()
+}
+function removeTokenC4(token, tile) {
+    tile.textContent = "0"
+    tile.classList.add("empty")
+    if (token == String.fromCodePoint(10060)) {
+        tile.classList.remove("ex")
+    } else {
+        tile.classList.remove("oh")
+    }
+    tile.classList.remove("ocupado")
+    blankZeroesC4()
 }
 
 function randOC4() {
@@ -156,6 +165,7 @@ function randOC4() {
         dropTokenC4(String.fromCodePoint(11093), randBlank)          // ⭕
         blankZeroesC4()
     }
+    saveC4()      //i need another game over check somewhere, but if i do it here, it alerts * twice *
 }
 
 function blankZeroesC4() {
@@ -163,8 +173,9 @@ function blankZeroesC4() {
         if (tile.textContent === "0") {
             tile.classList.add("empty")
         } else {
-            tile.style.backgroundColor = getColorC4(tile.textContent)
+            tile.classList.remove("empty")
         }
+        tile.style.backgroundColor = getColorC4(tile.textContent)
     })
     blanks = document.querySelectorAll('.empty')
 }
@@ -173,6 +184,7 @@ function getColorC4(val) {
     switch (val) {
         case String.fromCodePoint(10060): return "#42F5E3"
         case String.fromCodePoint(11093): return "#F3F781"
+        default: return "transparent"
     }
 }
 
@@ -202,12 +214,6 @@ function saveC4(game_over = checkGameOverC4()) {
     })
         .then(r => r.json())
         .then(game => {
-            //if it comes back as game_over, invoke handleGameOver()
-
-            if (game.game_over) {
-                //handle Game over -> should stop the rest from executing ?
-            }
-
             // console.log("After Save: ")
             // console.log(`Score: ${game.score}`)
             // console.log(`Board: ${game.board_state}`)
@@ -219,16 +225,13 @@ function saveC4(game_over = checkGameOverC4()) {
 function checkGameOverC4() {
     if (connect4()) {
         //win or lose
-        handleGameOverC4()
         return true
     } else if (blanks.length === 0) {
         //stale mate, it's a draw. Do something?
-        alert("Stale Mate :/")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        handleGameOverC4()
+        sleep(500).then(() => {
+            alert("Stale Mate :/")
+            handleGameOverC4()
+        })
         return true
     }
     return false     //game continues; it's not over
@@ -238,21 +241,19 @@ function connect4() {
     if (fourInARowC4("ex")) {
         // you win!
         incrementScoreC4(80)
-        alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
+        sleep(500).then(() => {
+            alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
+            handleGameOverC4()
+        })
         return true
     }
     else if (fourInARowC4("oh")) {
         // you lose!
         incrementScoreC4(-80)
-        alert("You Lost! :( Your score was: " + htmlScore.firstElementChild.textContent + " Better Luck Next Time!!")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
+        sleep(500).then(() => {
+            alert("You Lost! :( Your score was: " + htmlScore.firstElementChild.textContent + " Better Luck Next Time!!")
+            handleGameOverC4()
+        })
         return true
     }
     // else nothing; game continues
@@ -275,7 +276,6 @@ function fourInARowC4(symb) {
 function checkRow(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (j < 6) {
@@ -289,7 +289,6 @@ function checkRow(symb, tile, num) {
 function checkCol(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6) {
@@ -302,7 +301,6 @@ function checkCol(symb, tile, num) {
 function checkMajDiag(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6 && j < 6) {
@@ -315,7 +313,6 @@ function checkMajDiag(symb, tile, num) {
 function checkMinDiag(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6 && j > 0) {
