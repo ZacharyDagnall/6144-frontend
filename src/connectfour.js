@@ -5,6 +5,7 @@ function startC4() {  //create HTML items on document
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    music.pause()
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.add("hidden")
     let logoutButton = document.querySelector("#logout")
@@ -50,8 +51,15 @@ function loadBoardC4(board) {  //render board (new or updated)
         row.forEach((col, j) => {
             let htmlCol = htmlRow.querySelector(`[col-id="${j}"]`)
             htmlCol.textContent = col
-            if (col === 0) {
+            if (col == 0) {         //come in as numbers on new game, strings on loaded game -> hence == and not ===
                 htmlCol.classList.add("empty")
+            } else {
+                htmlCol.classList.add("ocupado")
+                if (col == String.fromCodePoint(10060)) {
+                    htmlCol.classList.add("ex")
+                } else {
+                    htmlCol.classList.add("oh")
+                }
             }
         })
     })
@@ -99,6 +107,7 @@ function handleQuitC4() {
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -111,6 +120,7 @@ function handleGameOverC4() {
     document.removeEventListener("click", handleC4Click)
 
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -174,6 +184,7 @@ function blankZeroesC4() {
             tile.classList.add("empty")
         } else {
             tile.classList.remove("empty")
+            //if (tile.textContent ==)
         }
         tile.style.backgroundColor = getColorC4(tile.textContent)
     })
@@ -242,7 +253,7 @@ function connect4() {
         // you win!
         incrementScoreC4(80)
         sleep(500).then(() => {
-            alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
+            alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
             handleGameOverC4()
         })
         return true

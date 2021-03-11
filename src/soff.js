@@ -11,6 +11,7 @@ function startSOFF() {  //create HTML items on document
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    music.pause()
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.add("hidden")
     let logoutButton = document.querySelector("#logout")
@@ -110,6 +111,7 @@ function handleQuitSOFF() {
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -328,6 +330,7 @@ function checkGameOverSOFF() {
             let buttons = document.querySelector("#game-buttons")
             buttons.classList.remove("hidden")
             gameDiv.classList.add("hidden")
+            music.play()
             let logoutButton = document.querySelector("#logout")
             logoutButton.classList.remove("hidden")
             myScores(welcome.dataset.id)

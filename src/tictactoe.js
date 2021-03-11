@@ -5,6 +5,7 @@ function startTTT() {  //create HTML items on document
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    music.pause()
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.add("hidden")
     let logoutButton = document.querySelector("#logout")
@@ -50,9 +51,15 @@ function loadBoardTTT(board) {  //render board (new or updated)
         row.forEach((col, j) => {
             let htmlCol = htmlRow.querySelector(`[col-id="${j}"]`)
             htmlCol.textContent = col
-            if (col === 0) {
-                //htmlCol.textContent = ""
+            if (col == 0) {            //come in as numbers on new game, strings on loaded game -> hence == and not ===
                 htmlCol.classList.add("empty")
+            } else {
+                htmlCol.classList.add("ocupado")
+                if (col == String.fromCodePoint(10060)) {
+                    htmlCol.classList.add("ex")
+                } else {
+                    htmlCol.classList.add("oh")
+                }
             }
         })
     })
@@ -95,6 +102,7 @@ function handleQuitTTT() {
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -107,6 +115,7 @@ function handleGameOverTTT() {
     document.removeEventListener("click", handleTTTClick)
 
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -121,7 +130,7 @@ function sleep(ms) {
 }
 
 function placeTokenTTT(token, tile) {
-    tile.textContent = String.fromCodePoint(10060) //"EX" //might be a problem if i click on an O ?  // ❌ why can't i use emoji
+    tile.textContent = String.fromCodePoint(10060)  // ❌ 
     tile.classList.remove("empty")
     tile.classList.add("ex")
     tile.classList.add("ocupado")
@@ -134,7 +143,7 @@ function placeTokenTTT(token, tile) {
 function randOTTT() {
     if (blanks.length !== 0) {
         let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-        randBlank.textContent = String.fromCodePoint(11093) //"OH" // ⭕ why can't i use emoji
+        randBlank.textContent = String.fromCodePoint(11093)  // ⭕  
         randBlank.classList.remove("empty")
         randBlank.classList.add("oh")
         randBlank.classList.add("ocupado")

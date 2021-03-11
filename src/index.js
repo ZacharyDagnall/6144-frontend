@@ -2,6 +2,11 @@
 const body = document.querySelector("body")
 const welcome = document.querySelector("#welcome")
 const gameDiv = document.querySelector("#game")
+
+const music = new Audio("./music/DuckTalesMoonTheme.mp3")
+music.volume = .3
+music.loop = true
+
 document.addEventListener("DOMContentLoaded", e => {
     login()
 })
@@ -96,6 +101,8 @@ function goodbyeUser() {
     loginEl.remove()
     let machine = document.querySelector('#machine')
     machine.classList.remove('hidden')
+    music.pause()
+    music.currentTime = 0
     login()
 }
 
@@ -107,6 +114,7 @@ function welcomeUser(user) {
     logout.classList.remove("hidden")
     logout.removeEventListener("click", goodbyeUser)
     logout.addEventListener("click", goodbyeUser)
+    music.play()
 }
 
 function makeNewUser(name) {

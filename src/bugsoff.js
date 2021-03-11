@@ -24,6 +24,7 @@ function startBugSOFF() {  //create HTML items on document
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    music.pause()
     gameDiv.setAttribute('mirror-mode', "off")
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.add("hidden")
@@ -140,6 +141,7 @@ function handleQuitBugSOFF() {
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
+    music.play()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -445,6 +447,7 @@ function checkGameOverBugSOFF() {
             let buttons = document.querySelector("#game-buttons")
             buttons.classList.remove("hidden")
             gameDiv.classList.add("hidden")
+            music.play()
             let logoutButton = document.querySelector("#logout")
             logoutButton.classList.remove("hidden")
             myScores(welcome.dataset.id)
