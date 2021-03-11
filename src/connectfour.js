@@ -84,11 +84,11 @@ function fillScoresC4() {
 function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
-        dropTokenC4(String.fromCodePoint(10060), tile)          //"EX"  // ❌ why can't i use emoji
+        dropTokenC4(String.fromCodePoint(10060), tile)          // ❌  
         sleepC4(1100).then(() => { randOC4() });
         blankZeroesC4()
-        incrementScoreC4(-10)
-        console.log("tile clicked, your move")
+        incrementScoreC4(-20)
+        saveC4()
     }
 }
 
@@ -148,21 +148,14 @@ function placeTokenC4(token, tile) {
     }
     tile.classList.add("ocupado")
     blanks = document.querySelectorAll('.empty')
-    //saveC4()      //turn this one back on after done playing with doneChecker
 }
 
 function randOC4() {
     if (blanks.length !== 0) {
         let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-        dropTokenC4(String.fromCodePoint(11093), randBlank)
-        // randBlank.textContent = String.fromCodePoint(11093) //"OH" // ⭕ why can't i use emoji
-        // randBlank.classList.remove("empty")
-        // randBlank.classList.add("oh")
-        // randBlank.classList.add("ocupado")
-        // blanks = document.querySelectorAll('.empty')
+        dropTokenC4(String.fromCodePoint(11093), randBlank)          // ⭕
         blankZeroesC4()
     }
-    //saveC4()
 }
 
 function blankZeroesC4() {
@@ -170,7 +163,6 @@ function blankZeroesC4() {
         if (tile.textContent === "0") {
             tile.classList.add("empty")
         } else {
-            console.log("trying to get a color", tile.textContent)
             tile.style.backgroundColor = getColorC4(tile.textContent)
         }
     })
@@ -194,10 +186,10 @@ function saveC4(game_over = checkGameOverC4()) {
     })
     htmlScore = document.querySelector('#score')
 
-    console.log("Before Save: ")
-    console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
-    console.log(`Board: ${board}`)
-    console.log(`Status: ${game_over}`)
+    // console.log("Before Save: ")
+    // console.log(`Score: ${parseInt(htmlScore.firstElementChild.textContent)}`)
+    // console.log(`Board: ${board}`)
+    // console.log(`Status: ${game_over}`)
 
 
     fetch(`http://localhost:3000/games/${id}`, {
@@ -210,10 +202,16 @@ function saveC4(game_over = checkGameOverC4()) {
     })
         .then(r => r.json())
         .then(game => {
-            console.log("After Save: ")
-            console.log(`Score: ${game.score}`)
-            console.log(`Board: ${game.board_state}`)
-            console.log(`Status: ${game.game_over}`)
+            //if it comes back as game_over, invoke handleGameOver()
+
+            if (game.game_over) {
+                //handle Game over -> should stop the rest from executing ?
+            }
+
+            // console.log("After Save: ")
+            // console.log(`Score: ${game.score}`)
+            // console.log(`Board: ${game.board_state}`)
+            // console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
@@ -234,13 +232,13 @@ function connect4() {
     if (fourInARowC4("ex")) {
         // you win!
         alert("You Won! :D")
-        incrementScoreC4(50)
+        incrementScoreC4(80)
         return true
     }
     else if (fourInARowC4("oh")) {
         // you lose!
         alert("You Lost! :(")
-        incrementScoreC4(-50)
+        incrementScoreC4(-80)
         return true
     }
     // else nothing; game continues
@@ -249,17 +247,13 @@ function connect4() {
 
 function fourInARowC4(symb) {
     let symbs = Array.from(tiles).filter(tile => tile.classList.contains(symb))
-    console.log("we're in the fiar method", symbs)
     for (let count = 0; count < symbs.length; count++) {
         tile = symbs[count]
 
-        if (checkRow(symb, tile, 4)) {
-            console.log("found a good row")
+        if (checkRow(symb, tile, 4) || checkCol(symb, tile, 4) || checkMajDiag(symb, tile, 4) || checkMinDiag(symb, tile, 4)) {
+            console.log("found a good four!")
             return true
-        } else if (checkCol(symb, tile, 4)) {
-            console.log("found a good column")
-            return true
-        } // else do more checks, not done checking. vertical and diagonal.
+        }
     }
     return false
 }
@@ -279,60 +273,41 @@ function checkRow(symb, tile, num) {
 }
 
 function checkCol(symb, tile, num) {
-    //
+    let i = parseInt(tile.parentNode.getAttribute('row-id'))
+    let j = parseInt(tile.getAttribute('col-id'))
+    console.log("indices:", i, j)
+    if (num === 1) {
+        return (tile.classList.contains(symb))
+    } else if (i < 6) {
+        let nextTile = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
+        return (tile.classList.contains(symb) && checkCol(symb, nextTile, num - 1))
+    } else if (i === 6) {   //this means you are at the end of the col but looking for more than 1 cell, which can't be done
+        return false
+    }
 }
-
-
-// function threeInARowC4(symb) {
-//     let symbs = Array.from(tiles).filter(tile => tile.classList.contains(symb))
-//     for (let count = 0; count < symbs.length; count++) {
-//         tile = symbs[count]
-
-//         let i = parseInt(tile.parentNode.getAttribute('row-id'))
-//         let j = parseInt(tile.getAttribute('col-id'))
-//         console.log("indices:", i, j)
-//         if ((i == 0 || i == 2) && j == 1) {
-//             //check left and right
-//             let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
-//             let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-//             console.log(leftNeighbor, rightNeighbor)
-//             if (leftNeighbor.classList.contains(symb) && rightNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//         } else if ((j == 0 || j == 2) && i == 1) {
-//             //check up and down
-//             let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
-//             let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-//             console.log(upNeighbor, downNeighbor)
-//             if (upNeighbor.classList.contains(symb) && downNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//         } else if (i == 1 && j == 1) {
-//             //left and right
-//             let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
-//             let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-//             if (leftNeighbor.classList.contains(symb) && rightNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//             //up and down
-//             let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
-//             let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-//             if (upNeighbor.classList.contains(symb) && downNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//             //major diagonal
-//             let upLeftNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j - 1}"]`)
-//             let downRightNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j + 1}"]`)
-//             if (upLeftNeighbor.classList.contains(symb) && downRightNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//             //minor diagonal
-//             let downLeftNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j - 1}"]`)
-//             let upRightNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j + 1}"]`)
-//             if (downLeftNeighbor.classList.contains(symb) && upRightNeighbor.classList.contains(symb)) {
-//                 return true
-//             }
-//         }
-//     }
-//     return false
-// }
+function checkMajDiag(symb, tile, num) {
+    let i = parseInt(tile.parentNode.getAttribute('row-id'))
+    let j = parseInt(tile.getAttribute('col-id'))
+    console.log("indices:", i, j)
+    if (num === 1) {
+        return (tile.classList.contains(symb))
+    } else if (i < 6 && j < 6) {
+        let nextTile = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j + 1}"]`)
+        return (tile.classList.contains(symb) && checkMajDiag(symb, nextTile, num - 1))
+    } else if (i === 6 || j === 6) {   //this means you are at the end of a row or col but looking for more than 1 cell, which can't be done
+        return false
+    }
+}
+function checkMinDiag(symb, tile, num) {
+    let i = parseInt(tile.parentNode.getAttribute('row-id'))
+    let j = parseInt(tile.getAttribute('col-id'))
+    console.log("indices:", i, j)
+    if (num === 1) {
+        return (tile.classList.contains(symb))
+    } else if (i < 6 && j > 0) {
+        let nextTile = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j - 1}"]`)
+        return (tile.classList.contains(symb) && checkMinDiag(symb, nextTile, num - 1))
+    } else if (i === 6 || j === 0) {   //this means you are at the end of a row or beginning of a col but looking for more than 1 cell, which can't be done
+        return false
+    }
+}
