@@ -129,7 +129,7 @@ let soff = document.querySelector("#soff")
 let fibsoff = document.querySelector("#fibsoff")
 let c4 = document.querySelector("#c4")
 let lights = document.querySelector("#lights")
-let bug = document.querySelector("#bug")
+let bug = document.querySelector("#bug-soff")
 
 document.addEventListener("click", e => {
     if (e.target == soff) {
@@ -146,3 +146,7 @@ document.addEventListener("click", e => {
         startBugSOFF()
     }
 })
+
+// document.addEventListener("mouseover", e =>{
+//     if
+// })
