@@ -7,38 +7,43 @@
     <script src="./src/tictactoe.js" defer></script>
     <script src="./src/connectfour.js" defer></script>
     <script src="./src/lightsout.js" defer></script>
+    <script src="./src/bugsoff.js" defer></script>
 
 </head>
 
 <body>
 
-    <h1 class= "title">Game Boyz Arcade</h1>
+    <h1 class="title">Game Boyz Arcade</h1>
 
-    <h3 id="welcome" data-id="" class= "hello">Welcome!</h3>
+    <h3 id="welcome" data-id="" class="hello">Welcome!</h3>
     <button id="logout" class="hidden">Log Out</button>
 
     <div id="game-buttons" class="hidden" class="banner">
         <!-- <div> -->
-            <img src="./images/tictactoe.png">
-            <button id="ttt"> Tic-Tac-Toe </button>
+        <img src="./images/tictactoe.png">
+        <button id="ttt"> Tic-Tac-Toe </button>
         <!-- </div> -->
         <!-- <div> -->
-            <img src="./images/soff.png">
-            <button id="soff"> 6144 </button>
+        <img src="./images/soff.png">
+        <button id="soff"> 6144 </button>
         <!-- </div> -->
         <!-- <div> -->
-            <img src="./images/fibsoff.png">
-            <button id="fibsoff"> Fibonacci Tiles </button>
+        <img src="./images/fibsoff.png">
+        <button id="fibsoff"> Fibonacci Tiles </button>
         <!-- </div> -->
         <!-- <div> -->
-            <img src="./images/connect4.png">
-            <button id="c4"> Connect 4 </button>
+        <img src="./images/connect4.png">
+        <button id="c4"> Connect 4 </button>
         <!-- </div> -->
         <!-- <div> -->
-            <img src="./images/lights.png">
-            <button id="lights"> Lights Out</button>
-        </div>
-        
+        <img src="./images/lights.png">
+        <button id="lights"> Lights Out</button>
+    </div>
+    <!-- <div> -->
+    <img src="./images/soff.png">
+    <button id="bug"> Lights Out</button>
+    </div>
+
     </div>
 
     <div id="game" class="hidden">
@@ -54,35 +59,35 @@
         </ul>
     </div>
 
-    <div id= "machine">  
+    <div id="machine">
         <div class='machine shake-slow'>
-        <div class='shine'></div>
-        <div class='top'>
-            <div class='screwTop'></div>
-            <div class='panels'>
-            <div class='panel'></div>
-            <div class='panel'></div>
-            <div class='panel'></div>
+            <div class='shine'></div>
+            <div class='top'>
+                <div class='screwTop'></div>
+                <div class='panels'>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                </div>
             </div>
-        </div>
-        <div class='screen'></div>
-        <div class='table color'>
-            <div class='button'></div>
-            <div class='stick'></div>
-        </div>
-        <div class='bottom color'>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='screw'></div>
-            <div class='panels'>
-            <div class='panel'></div>
-            <div class='panel'></div>
-            <div class='panel'></div>
-            <div class='panel'></div>
-            <div class='panel'></div>
+            <div class='screen'></div>
+            <div class='table color'>
+                <div class='button'></div>
+                <div class='stick'></div>
             </div>
-            <div class='screwRight'></div>
-        </div>
+            <div class='bottom color'>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='screw'></div>
+                <div class='panels'>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                    <div class='panel'></div>
+                </div>
+                <div class='screwRight'></div>
+            </div>
         </div>
     </div>
 
