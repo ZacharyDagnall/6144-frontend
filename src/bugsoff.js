@@ -2,7 +2,7 @@
 
 
 const newBugSOFFNums = ["3", "6"]
-const Bugs = []
+const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(128029), String.fromCodePoint(128030), String.fromCodePoint(129439), String.fromCodePoint(129410), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128012), String.fromCodePoint(129431)]
 
 function startBugSOFF() {  //create HTML items on document
     gameDiv.innerHTML = `<div id="score"> Your Current Score:
