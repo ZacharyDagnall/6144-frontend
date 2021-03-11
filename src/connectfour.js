@@ -85,11 +85,11 @@ function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
         dropTokenC4(String.fromCodePoint(10060), tile)          // ❌  
-        sleep(700).then(() => { randOC4() });
-        blankZeroesC4()
-        incrementScoreC4(-20)
-        //saveC4()
-        checkGameOverC4()
+        if (!checkGameOverC4()) {
+            sleep(700).then(() => { randOC4() });
+            blankZeroesC4()
+            incrementScoreC4(-20)
+        }
     }
 }
 
@@ -132,8 +132,9 @@ function dropTokenC4(token, tile) {
                 dropTokenC4(token, downNeighbor)
             })
         }
+    } else {           //, either you're at the bottom or the spot below is occupied - so place here and stop.
+        saveC4()
     }
-    // else, either you're at the bottom or the spot below is occupied - so place here and stop.
 }
 
 function placeTokenC4(token, tile) {
@@ -165,7 +166,6 @@ function randOC4() {
         dropTokenC4(String.fromCodePoint(11093), randBlank)          // ⭕
         blankZeroesC4()
     }
-    saveC4()      //i need another game over check somewhere, but if i do it here, it alerts * twice *
 }
 
 function blankZeroesC4() {
