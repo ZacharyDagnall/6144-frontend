@@ -123,7 +123,7 @@ function swipeUpFibSOFF() {
     console.log("swiped up!")
     for (let j = 0; j < 4; j++) {
         for (let i = 0; i < 4; i++) {
-            moveUpFibSOFF(i, j)
+            sleep(150).then(() => { moveUpFibSOFF(i, j) })
         }
     }
     newTileFibSOFF()
@@ -133,7 +133,7 @@ function swipeDownFibSOFF() {
     console.log("swiped down!")
     for (let j = 0; j < 4; j++) {
         for (let i = 3; i >= 0; i--) {
-            moveDownFibSOFF(i, j)
+            sleep(150).then(() => { moveDownFibSOFF(i, j) })
         }
     }
     newTileFibSOFF()
@@ -143,7 +143,7 @@ function swipeLeftFibSOFF() {
     console.log("swiped left!")
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            moveLeftFibSOFF(i, j)
+            sleep(150).then(() => { moveLeftFibSOFF(i, j) })
         }
     }
     newTileFibSOFF()
@@ -153,7 +153,7 @@ function swipeRightFibSOFF() {
     console.log("swiped right!")
     for (let i = 0; i < 4; i++) {
         for (let j = 3; j >= 0; j--) {
-            moveRightFibSOFF(i, j)
+            sleep(150).then(() => { moveRightFibSOFF(i, j) })
         }
     }
     newTileFibSOFF()
@@ -169,7 +169,7 @@ function moveUpFibSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveUpFibSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpFibSOFF(i - 1, j) })
         } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -177,7 +177,7 @@ function moveUpFibSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreFibSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveUpFibSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpFibSOFF(i - 1, j) })
         }
     }
     blankZeroesFibSOFF()
@@ -191,7 +191,7 @@ function moveDownFibSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveDownFibSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownFibSOFF(i + 1, j) })
         } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -199,7 +199,7 @@ function moveDownFibSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreFibSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveDownFibSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownFibSOFF(i + 1, j) })
         }
     }
     blankZeroesFibSOFF()
@@ -213,7 +213,7 @@ function moveLeftFibSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveLeftFibSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftFibSOFF(i, j - 1) })
         } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -221,7 +221,7 @@ function moveLeftFibSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreFibSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveLeftFibSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftFibSOFF(i, j - 1) })
         }
     }
     blankZeroesFibSOFF()
@@ -235,7 +235,7 @@ function moveRightFibSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveRightFibSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightFibSOFF(i, j + 1) })
         } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -243,7 +243,7 @@ function moveRightFibSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreFibSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveRightFibSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightFibSOFF(i, j + 1) })
         }
     }
     blankZeroesFibSOFF()
