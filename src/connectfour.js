@@ -88,7 +88,8 @@ function handleC4Click(event) {
         sleep(700).then(() => { randOC4() });
         blankZeroesC4()
         incrementScoreC4(-20)
-        saveC4()
+        //saveC4()
+        checkGameOverC4()
     }
 }
 
@@ -122,16 +123,17 @@ function handleGameOverC4() {
 function dropTokenC4(token, tile) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    if (i === 6) {          //if already at the bottom, just placeToken here
-        placeTokenC4(token, tile)
-    } else {                //not at the bottom, let's check the spot below
+    placeTokenC4(token, tile)
+    if (i < 6) {                //not at the bottom, let's check the spot below
         let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-        if (downNeighbor.classList.contains('ocupado')) {   //the one below us is full, so placeToken here
-            placeTokenC4(token, tile)
-        } else {                            //spot below us is empty, so keep falling (recursive call)
-            dropTokenC4(token, downNeighbor)
+        if (!downNeighbor.classList.contains('ocupado')) {   //the one below us is empty, so remove and keep falling 
+            sleep(90).then(() => {
+                removeTokenC4(token, tile)
+                dropTokenC4(token, downNeighbor)
+            })
         }
     }
+    // else, either you're at the bottom or the spot below is occupied - so place here and stop.
 }
 
 function placeTokenC4(token, tile) {
@@ -143,7 +145,18 @@ function placeTokenC4(token, tile) {
         tile.classList.add("oh")
     }
     tile.classList.add("ocupado")
-    blanks = document.querySelectorAll('.empty')
+    blankZeroesC4()
+}
+function removeTokenC4(token, tile) {
+    tile.textContent = "0"
+    tile.classList.add("empty")
+    if (token == String.fromCodePoint(10060)) {
+        tile.classList.remove("ex")
+    } else {
+        tile.classList.remove("oh")
+    }
+    tile.classList.remove("ocupado")
+    blankZeroesC4()
 }
 
 function randOC4() {
@@ -152,6 +165,7 @@ function randOC4() {
         dropTokenC4(String.fromCodePoint(11093), randBlank)          // ⭕
         blankZeroesC4()
     }
+    saveC4()      //i need another game over check somewhere, but if i do it here, it alerts * twice *
 }
 
 function blankZeroesC4() {
@@ -159,8 +173,9 @@ function blankZeroesC4() {
         if (tile.textContent === "0") {
             tile.classList.add("empty")
         } else {
-            tile.style.backgroundColor = getColorC4(tile.textContent)
+            tile.classList.remove("empty")
         }
+        tile.style.backgroundColor = getColorC4(tile.textContent)
     })
     blanks = document.querySelectorAll('.empty')
 }
@@ -169,6 +184,7 @@ function getColorC4(val) {
     switch (val) {
         case String.fromCodePoint(10060): return "#42F5E3"
         case String.fromCodePoint(11093): return "#F3F781"
+        default: return "transparent"
     }
 }
 
