@@ -95,11 +95,9 @@ function handleLightPress(event){
 
 function lightChange(i,j){
     let selTile = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j}"]`)
-    console.log(selTile, i,j)
     if(i == 0 && j == 0){
         let down = document.querySelector(`[row-id="${i+1}"]`).querySelector(`[col-id="${j}"]`)
         let right = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j+1}"]`)
-        console.log(down,right)
         switchNum(down)
         switchNum(right)
         switchNum(selTile)
@@ -166,8 +164,9 @@ function lightChange(i,j){
         switchNum(selTile)
     }
     changeColor()
-    saveLight()
-    loadScoreLight()       
+    htmlScore = document.querySelector('#score')
+    loadScoreLight(parseInt(htmlScore.firstElementChild.textContent) - 25) 
+    saveLight()      
 }
 
 function switchNum(tile){
@@ -254,17 +253,26 @@ function saveLight(game_over = checkGameOverLight()) {
     //don't need to do anything with saved board because we already updated the dom optimistically
 }
 
-function checkGameOverLight() {
+function checkSums(){
     let numArr = []
     tilesLights.forEach(tile => {
         numArr.push(parseInt(tile.innerHTML))
     })
-    let sum = numArr.reduce(function(a, b) {
+    let sum =numArr.reduce(function(a, b) {
         return a + b
     }, 0)
-    if(sum == 25){
+    return sum
+}
+
+function checkGameOverLight() {
+    if(checkSums() == 25 || parseInt(htmlScore.firstElementChild.textContent) <= 0 ){
+        alert("Game Over!")
+        document.removeEventListener("click", handleLightPress)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
         return true
-    }else{
+    } else {
         return false
     }
 }
