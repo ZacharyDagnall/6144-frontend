@@ -95,6 +95,8 @@ function goodbyeUser() {
 
     let loginEl = document.querySelector("#login-form")
     loginEl.remove()
+    let machine = document.querySelector('#machine')
+    machine.classList.remove('hidden')
     login()
 }
 
