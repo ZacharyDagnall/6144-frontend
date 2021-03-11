@@ -135,7 +135,7 @@ function swipeUpSOFF() {
     console.log("swiped up!")
     for (let j = 0; j < 4; j++) {
         for (let i = 0; i < 4; i++) {
-            moveUpSOFF(i, j)
+            sleep(150).then(() => { moveUpSOFF(i, j) })
         }
     }
     newTileSOFF()
@@ -145,7 +145,7 @@ function swipeDownSOFF() {
     console.log("swiped down!")
     for (let j = 0; j < 4; j++) {
         for (let i = 3; i >= 0; i--) {
-            moveDownSOFF(i, j)
+            sleep(150).then(() => { moveDownSOFF(i, j) })
         }
     }
     newTileSOFF()
@@ -155,7 +155,7 @@ function swipeLeftSOFF() {
     console.log("swiped left!")
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            moveLeftSOFF(i, j)
+            sleep(150).then(() => { moveLeftSOFF(i, j) })
         }
     }
     newTileSOFF()
@@ -165,7 +165,7 @@ function swipeRightSOFF() {
     console.log("swiped right!")
     for (let i = 0; i < 4; i++) {
         for (let j = 3; j >= 0; j--) {
-            moveRightSOFF(i, j)
+            sleep(150).then(() => { moveRightSOFF(i, j) })
         }
     }
     newTileSOFF()
@@ -181,7 +181,7 @@ function moveUpSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveUpSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpSOFF(i - 1, j) })
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
@@ -189,7 +189,7 @@ function moveUpSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveUpSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpSOFF(i - 1, j) })
         }
     }
     blankZeroesSOFF()
@@ -203,7 +203,7 @@ function moveDownSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveDownSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownSOFF(i + 1, j) })
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
@@ -211,7 +211,7 @@ function moveDownSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveDownSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownSOFF(i + 1, j) })
         }
     }
     blankZeroesSOFF()
@@ -225,7 +225,7 @@ function moveLeftSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveLeftSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftSOFF(i, j - 1) })
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
@@ -233,7 +233,7 @@ function moveLeftSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveLeftSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftSOFF(i, j - 1) })
         }
     }
     blankZeroesSOFF()
@@ -247,7 +247,7 @@ function moveRightSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveRightSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightSOFF(i, j + 1) })
         } else if (htmlTile.textContent === nextTile.textContent && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = 2 * parseInt(htmlTile.textContent)
             nextTile.textContent = score
@@ -255,7 +255,7 @@ function moveRightSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveRightSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightSOFF(i, j + 1) })
         }
     }
     blankZeroesSOFF()
