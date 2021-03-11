@@ -267,7 +267,7 @@ function checkSums(){
 
 function checkGameOverLight() {
     if(checkSums() == 25 || parseInt(htmlScore.firstElementChild.textContent) <= 0 ){
-        alert("Game Over!")
+        alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + "Wow!!")
         document.removeEventListener("click", handleLightPress)
         let buttons = document.querySelector("#game-buttons")
         buttons.classList.remove("hidden")

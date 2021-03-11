@@ -334,7 +334,7 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
 
 function checkGameOverSOFF() {
     if (blanks.length === 0 && noNeighborsSOFF()) {
-        alert("Game Over!")
+        alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + "Wow!!")
         document.removeEventListener("keydown", handleSOFFKey)
         let buttons = document.querySelector("#game-buttons")
         buttons.classList.remove("hidden")

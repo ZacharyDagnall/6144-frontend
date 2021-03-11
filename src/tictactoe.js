@@ -19,6 +19,7 @@ function startTTT() {  //create HTML items on document
             let tile = document.createElement('div')
             tile.setAttribute("col-id", j)
             tile.classList.add("tile")
+            tile.classList.add("tac")
             row.append(tile)
         }
     }

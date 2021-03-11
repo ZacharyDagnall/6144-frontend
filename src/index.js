@@ -41,6 +41,8 @@ function login() {
                 }
                 login.classList.add("hidden")
                 buttons.classList.remove("hidden")
+                let machine = document.querySelector('#machine')
+                machine.classList.add('hidden')
             })
     })
 }

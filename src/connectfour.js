@@ -231,14 +231,22 @@ function checkGameOverC4() {
 function connect4() {
     if (fourInARowC4("ex")) {
         // you win!
-        alert("You Won! :D")
         incrementScoreC4(80)
+        alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
+        document.removeEventListener("click", handleC4Click)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
         return true
     }
     else if (fourInARowC4("oh")) {
         // you lose!
-        alert("You Lost! :(")
         incrementScoreC4(-80)
+        alert("You Lost! :( Your score was: " + htmlScore.firstElementChild.textContent + " Better Luck Next Time!!")
+        document.removeEventListener("click", handleC4Click)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
         return true
     }
     // else nothing; game continues
