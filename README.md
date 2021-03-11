@@ -45,3 +45,7 @@ Maybe:
 *** refactor / put some repeat code into methods !
 *** put repeat methods into index.js instead of in the individual games
 ***** rename similarly named methods
+
+Zak:
+* in Connect 4, doesnt register a lose immediately, waits until next click... why?
+* 
