@@ -11,6 +11,8 @@
 
 button{
     font-family: 'Press Start 2P', cursive;
+    background-color: rgb(40, 1, 69);
+    color: rgba(66, 244, 220, 1)
 }
 
 .row {
@@ -118,7 +120,7 @@ ul.banner{
 }
 #logout{
     position: relative;
-    left: 47%;
+    left: 46%;
 }
 
 /* This starts the CSS arcade Machine */
