@@ -25,6 +25,7 @@ function startSOFF() {  //create HTML items on document
             let tile = document.createElement('div')
             tile.setAttribute("col-id", j)
             tile.classList.add("tile")
+            tile.classList.add("soff")
             row.append(tile)
         }
     }
@@ -334,6 +335,10 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
 function checkGameOverSOFF() {
     if (blanks.length === 0 && noNeighborsSOFF()) {
         alert("Game Over!")
+        document.removeEventListener("keydown", handleSOFFKey)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
         // handleGameOverSOFF()
         return true
     } else {

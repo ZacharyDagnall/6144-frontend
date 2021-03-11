@@ -15,7 +15,7 @@ function startLight() {  //create HTML items on document
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.add("hidden")
     let boardDiv = document.querySelector('#board')
-    boardDiv.classList.add("board-light")
+    
     for (let i = 0; i < 5; i++) {
         const row = document.createElement('div')
         row.classList.add("row")
@@ -215,6 +215,7 @@ function getColorLight(val) {
 function changeColor(){
     tilesLights.forEach(tile =>{
         tile.style.backgroundColor = getColorLight(parseInt(tile.textContent))
+        tile.style.color = getColorLight(parseInt(tile.textContent))
     })
 }
 

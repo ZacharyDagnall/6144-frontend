@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", e => {
 function makeLogin() {
     let login = document.createElement("form")
     login.id = "login-form"
+    login.classList.add("hello")
     const username = document.createElement('input')
     username.id = "username-input"
     username.name = "name"
