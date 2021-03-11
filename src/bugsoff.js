@@ -2,18 +2,18 @@
 
 
 const newBugSOFFNums = ["3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6"]
-// const bugs = ["🐛", "🐜", "🦗", "🦟", "🕷", "🦂"]
-const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410)]
+// const bugs = ["🐛", "🐜", "🦗", "🦟", "🕷", "🦂","🐜", "🦗", "🦟", "🦗", "🦟","🕷"] //  1 CP, 2 ants, 3 crickets, 3 mosquitos, 2 spiders, and 1 scorpion
+const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375)]
 const bugSquashNums = [6, 12, 24, 48, 96, 192]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 function printBugCheatSheet() {
-    let str = "When a bug appears, controls will  be reversed. \n You need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
-    bugs.forEach((bug, i) => {
-        str += `${bug}: ${bugSquashNums[i]} \n`
-    })
+    let str = "When a bug appears, controls will  be reversed. \nYou need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
+    for (let count = 0; count < 6; count++) {
+        str += `${bugs[count]}: ${bugSquashNums[count]} \n`
+    }
     console.log(str)
 }
 
@@ -158,6 +158,9 @@ function swipeUpBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeDownBugSOFF() {
     console.log("swiped down!")
@@ -168,6 +171,9 @@ function swipeDownBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeLeftBugSOFF() {
     console.log("swiped left!")
@@ -178,6 +184,9 @@ function swipeLeftBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 function swipeRightBugSOFF() {
     console.log("swiped right!")
@@ -188,6 +197,9 @@ function swipeRightBugSOFF() {
     }
     newTileBugSOFF()
     saveBugSOFF()
+    if (bugCheck()) {
+        printBugCheatSheet()
+    }
 }
 
 function moveUpBugSOFF(i, j) {
