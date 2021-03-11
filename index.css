@@ -6,6 +6,15 @@
     background-color: grey;
 }
 
+.board-light {
+    display: flex;
+    flex-wrap: wrap; 
+    width: 550px;
+    height: 550px;
+    background-color: grey;
+}
+
+
 .row {
     width: 600px;
 }
@@ -19,6 +28,15 @@
     border: 5px solid black;
     margin: 10px;
 }
+
+.tile-light {
+    width: 10px;
+    height: 10px
+}
+
+/* .new{
+    background-color:aquamarine;    
+} */
 
 .blank {
     visibility: hidden;

@@ -124,6 +124,7 @@ let ttt = document.querySelector("#ttt")
 let soff = document.querySelector("#soff")
 let fibsoff = document.querySelector("#fibsoff")
 let c4 = document.querySelector("#c4")
+let lights = document.querySelector("#lights")
 
 document.addEventListener("click", e => {
     if (e.target == soff) {
@@ -134,5 +135,7 @@ document.addEventListener("click", e => {
         startTTT()
     } else if (e.target == c4) {
         startC4()
+    } else if (e.target == lights ) {
+        startLight()
     }
 })
