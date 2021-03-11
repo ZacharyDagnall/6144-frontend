@@ -29,6 +29,11 @@
     verticle
 }
 
+.bug{
+    width: 68px;
+    height: 68px;
+}
+
 .tile-light {
     width: 40px;
     height: 40px;
@@ -49,6 +54,7 @@
     color: rgb(45, 0, 77);
     font-size: 91px
 }
+
 
 .connect {
     width: 5px;
