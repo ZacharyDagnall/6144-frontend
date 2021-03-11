@@ -255,9 +255,9 @@ function canCombine(tile1, tile2) {
     let m = fibnums.indexOf(a)
     let n = fibnums.indexOf(b)
 
-    if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
-        console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
-    } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
+    // if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
+    //     console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
+    // } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
 
     return (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0)
 }
@@ -335,7 +335,16 @@ function saveFibSOFF(game_over = checkGameOverFibSOFF()) {
 
 function checkGameOverFibSOFF() {
     if (blanks.length === 0 && noNeighborsFibSOFF()) {
-        alert("Game Over!")
+        sleep(200).then(() => {
+            alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
+            document.removeEventListener("keydown", handleSOFFKey)
+            let buttons = document.querySelector("#game-buttons")
+            buttons.classList.remove("hidden")
+            gameDiv.classList.add("hidden")
+            let logoutButton = document.querySelector("#logout")
+            logoutButton.classList.remove("hidden")
+            myScores(welcome.dataset.id)
+        })
         return true
     } else {
         return false

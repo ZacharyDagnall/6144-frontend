@@ -306,7 +306,7 @@ function squashBug(brick, bug) {
     bug.classList.remove("bug")
     bug.classList.add("smushed")
 
-    alert(`Bug Squashed! ${String.fromCodePoint(128165)}`) // 💥
+    sleep(150).then(() => { alert(`Bug Squashed! ${String.fromCodePoint(128165)}`) }) // 💥
 
     bugCheck() // check for remaining bugs and update mirror-mode accordingly
 
@@ -423,7 +423,16 @@ function bugCheck() {
 
 function checkGameOverBugSOFF() {
     if (blanks.length === 0 && noNeighborsBugSOFF()) {
-        alert("Game Over!")
+        sleep(200).then(() => {
+            alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
+            document.removeEventListener("keydown", handleSOFFKey)
+            let buttons = document.querySelector("#game-buttons")
+            buttons.classList.remove("hidden")
+            gameDiv.classList.add("hidden")
+            let logoutButton = document.querySelector("#logout")
+            logoutButton.classList.remove("hidden")
+            myScores(welcome.dataset.id)
+        })
         return true
     } else {
         return false

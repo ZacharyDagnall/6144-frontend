@@ -118,18 +118,6 @@ function handleQuitSOFF() {
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
 }
-function handleGameOverSOFF() {
-    document.removeEventListener("keydown", handleSOFFKey)
-
-    gameDiv.classList.add("hidden")
-
-    let buttons = document.querySelector("#game-buttons")
-    buttons.classList.remove("hidden")
-
-    let logoutButton = document.querySelector("#logout")
-    logoutButton.classList.remove("hidden")
-    myScores(welcome.dataset.id)
-}
 
 function swipeUpSOFF() {
     console.log("swiped up!")
@@ -334,12 +322,16 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
 
 function checkGameOverSOFF() {
     if (blanks.length === 0 && noNeighborsSOFF()) {
-        alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + "Wow!!")
-        document.removeEventListener("keydown", handleSOFFKey)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        // handleGameOverSOFF()
+        sleep(200).then(() => {
+            alert("Game Over! Your score was: " + htmlScore.firstElementChild.textContent + ". Wow!!")
+            document.removeEventListener("keydown", handleSOFFKey)
+            let buttons = document.querySelector("#game-buttons")
+            buttons.classList.remove("hidden")
+            gameDiv.classList.add("hidden")
+            let logoutButton = document.querySelector("#logout")
+            logoutButton.classList.remove("hidden")
+            myScores(welcome.dataset.id)
+        })
         return true
     } else {
         return false

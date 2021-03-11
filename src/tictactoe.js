@@ -91,7 +91,7 @@ function handleTTTClick(event) {
 
 function handleQuitTTT() {
     saveTTT(true)
-    document.removeEventListener("keydown", handleTTTClick)
+    document.removeEventListener("click", handleTTTClick)
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
@@ -102,9 +102,11 @@ function handleQuitTTT() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+
+    handleGameOverTTT()
 }
 function handleGameOverTTT() {
-    document.removeEventListener("keydown", handleTTTClick)
+    document.removeEventListener("click", handleTTTClick)
 
     gameDiv.classList.add("hidden")
 

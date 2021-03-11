@@ -94,7 +94,7 @@ function handleC4Click(event) {
 
 function handleQuitC4() {
     saveC4(true)
-    document.removeEventListener("keydown", handleC4Click)
+    document.removeEventListener("click", handleC4Click)
 
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
@@ -107,7 +107,7 @@ function handleQuitC4() {
     myScores(welcome.dataset.id)
 }
 function handleGameOverC4() {
-    document.removeEventListener("keydown", handleC4Click)
+    document.removeEventListener("click", handleC4Click)
 
     gameDiv.classList.add("hidden")
 
