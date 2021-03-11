@@ -45,3 +45,10 @@ Maybe:
 *** refactor / put some repeat code into methods !
 *** put repeat methods into index.js instead of in the individual games
 ***** rename similarly named methods
+
+bugs
+**** if you add two spiders together it tries to parseInt and tries to add to score
+
+*** Lights Out should start with one (some?) random lit tile ! Otherwise too easy
+
+** "this game's scores' shouldn't include open games right? need to fix

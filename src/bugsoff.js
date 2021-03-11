@@ -1,8 +1,12 @@
 
 
 
-const newBugSOFFNums = ["3", "6"]
+const newBugSOFFNums = ["3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6"]
 const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(128029), String.fromCodePoint(128030), String.fromCodePoint(129439), String.fromCodePoint(129410), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128012), String.fromCodePoint(129431)]
+let numsNBugs = []
+numsNBugs.push.apply(numsNBugs, bugs)
+numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
+numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 
 function startBugSOFF() {  //create HTML items on document
     gameDiv.innerHTML = `<div id="score"> Your Current Score:
@@ -11,6 +15,7 @@ function startBugSOFF() {  //create HTML items on document
                         <div id="board">
                         </div>`
     gameDiv.classList.remove("hidden")
+    gameDiv.setAttribute('mirror-mode', "off")
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.add("hidden")
     let logoutButton = document.querySelector("#logout")
@@ -41,7 +46,7 @@ function startBugSOFF() {  //create HTML items on document
     fetchBoardBugSOFF()
 }
 function fetchBoardBugSOFF() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/BugonacciTiles`)
+    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/6144BugMode`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -57,6 +62,9 @@ function loadBoardBugSOFF(board) {  //render board (new or updated)
             htmlCol.textContent = col
             if (col === 0) {
                 htmlCol.classList.add("blank")
+            }
+            if (bugs.indexOf(col) >= 0) {
+                htmlCol.classList.add("bug")
             }
         })
     })
@@ -74,8 +82,8 @@ function loadScoreBugSOFF(score) {
 function fillScoresBugSOFF() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
-    scoresList.textContent = "Bugonacci Tiles Scores:"
-    fetch(`http://localhost:3000/games/BugonacciTiles/leaderboard`)
+    scoresList.textContent = "6144 Bug Mode Scores:"
+    fetch(`http://localhost:3000/games/6144BugMode/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -86,21 +94,33 @@ function fillScoresBugSOFF() {
         })
 }
 
-function handleBugSOFFKey(event) {
+function handleBugSOFFKey(event) {  //the event listener for this will need to be removed and re-added when toggling mirror-mode, i think.
     tiles.forEach(tile => {
         tile.classList.remove("smushed")
     })
     if (event.key.startsWith("Arrow")) {
         event.preventDefault()
     }
-    if (event.key === "ArrowUp") {
-        swipeUpBugSOFF()
-    } else if (event.key === "ArrowDown") {
-        swipeDownBugSOFF()
-    } else if (event.key === "ArrowLeft") {
-        swipeLeftBugSOFF()
-    } else if (event.key === "ArrowRight") {
-        swipeRightBugSOFF()
+    if (gameDiv.getAttribute('mirror-mode') === "off") {
+        if (event.key === "ArrowUp") {
+            swipeUpBugSOFF()
+        } else if (event.key === "ArrowDown") {
+            swipeDownBugSOFF()
+        } else if (event.key === "ArrowLeft") {
+            swipeLeftBugSOFF()
+        } else if (event.key === "ArrowRight") {
+            swipeRightBugSOFF()
+        }
+    } else {
+        if (event.key === "ArrowUp") {
+            swipeDownBugSOFF()
+        } else if (event.key === "ArrowDown") {
+            swipeUpBugSOFF()
+        } else if (event.key === "ArrowLeft") {
+            swipeRightBugSOFF()
+        } else if (event.key === "ArrowRight") {
+            swipeLeftBugSOFF()
+        }
     }
 }
 function handleQuitBugSOFF() {
@@ -249,16 +269,27 @@ function moveRightBugSOFF(i, j) {
 }
 function canCombine(tile1, tile2) {
 
-    let a = parseInt(tile1.textContent)
-    let b = parseInt(tile2.textContent)
-    let m; //.indexOf(a)
-    let n; //.indexOf(b)
+    if (bugs.indexOf(tile1.textContent) >= 0 || bugs.indexOf(tile1.textContent) >= 0) {
+        return false
+    }
+    return tile1.textContent === tile2.textContent
+    // let a = parseInt(tile1.textContent)
+    // let b = parseInt(tile2.textContent)
+    // let m; //.indexOf(a)
+    // let n; //.indexOf(b)
 
-    if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
-        console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
-    } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
+    // if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
+    //     console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
+    // } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
 
-    return (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0)
+    // return (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0)
+}
+
+function squashBug() {
+    //nothing yet
+
+    //turn off mirror mode? here or somewhere else.
+    //oh check to make sure that there are no other bugs even though you squashed this one
 }
 
 function blankZeroesBugSOFF() {
@@ -268,31 +299,42 @@ function blankZeroesBugSOFF() {
         } else {
             tile.style.backgroundColor = getColorBugSOFF(parseInt(tile.textContent))
         }
+        if (bugs.indexOf(tile.textContent) >= 0) {
+            tile.classList.add("bug")
+        } else {
+            tile.classList.remove("bug")
+        }
     })
     blanks = document.querySelectorAll('.blank')
 }
 
 function getColorBugSOFF(val) {
     switch (val) {
-        case 1: return "#F6CED8"
-        case 2: return "#F7BE81"
-        case 3: return "#F3F781"
-        case 5: return "#58D3F7"
-        case 8: return "#A901DB"
-        case 13: return "#01DF3A"
-        case 21: return "#D7DF01"
-        case 34: return "#4287F5"
-        case 55: return "#8DF542"
-        case 89: return "#F5427B"
-        case 144: return "#F5A142"
-        case 233: return "#42F5E3"
+        case 3: return "#F6CED8"
+        case 6: return "#F7BE81"
+        case 12: return "#F3F781"
+        case 24: return "#58D3F7"
+        case 48: return "#A901DB"
+        case 96: return "#01DF3A"
+        case 192: return "#D7DF01"
+        case 384: return "#4287F5"
+        case 768: return "#8DF542"
+        case 1536: return "#F5427B"
+        case 3072: return "#F5A142"
+        case 6144: return "#42F5E3"
+        default: return "#F8F8FF"
     }
 }
 
 function newTileBugSOFF() {
     if (blanks.length !== 0) {
         let randBlank = blanks[Math.floor(blanks.length * Math.random())]
-        randBlank.textContent = newBugSOFFNums[Math.floor(newBugSOFFNums.length * Math.random())]
+        let newTileText = numsNBugs[Math.floor(numsNBugs.length * Math.random())]
+        randBlank.textContent = newTileText
+        if (bugs.indexOf(newTileText) >= 0) {
+            gameDiv.setAttribute('mirror-mode', 'on')
+            randBlank.classList.add("bug")
+        }
         randBlank.classList.remove("blank")
     }
     blankZeroesBugSOFF()
@@ -330,6 +372,19 @@ function saveBugSOFF(game_over = checkGameOverBugSOFF()) {
             // console.log(`Status: ${game.game_over}`)
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
+}
+
+function bugCheck() {
+    for (let count = 0; count < tiles.length; count++) {
+        let tile = tiles[count]
+
+        console.log("bug checking tile:", tile)
+        if (tile.classList.contains("bug")) {
+            gameDiv.setAttribute('mirror-mode', 'on')
+            return true
+        }
+    }
+    return false
 }
 
 function checkGameOverBugSOFF() {
