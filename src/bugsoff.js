@@ -2,12 +2,20 @@
 
 
 const newBugSOFFNums = ["3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6"]
-const bugs = [String.fromCodePoint(128030), String.fromCodePoint(128027), String.fromCodePoint(128012), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(128029), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410), String.fromCodePoint(128375)]
-const bugSquashNums = [3, 6, 12, 24, 48, 96, 1, 1, 1, 1, 1, 1]
+// const bugs = ["🐛", "🐜", "🦗", "🦟", "🕷", "🦂"]
+const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410)]
+const bugSquashNums = [6, 12, 24, 48, 96, 192]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
+function printBugCheatSheet() {
+    let str = ""
+    bugs.forEach((bug, i) => {
+        str += `${bug}: ${bugSquashNums[i]} \n`
+    })
+    console.log(str)
+}
 
 function startBugSOFF() {  //create HTML items on document
     gameDiv.innerHTML = `<div id="score"> Your Current Score:
@@ -290,7 +298,6 @@ function canCombineBugSOFF(tile1, tile2) {
 
 function squashBug(brick, bug) {
     incrementScoreBugSOFF(3 * parseInt(brick.textContent))  //big pay off because this is hard
-    console.log("score updated")
 
     //replace bug tile with brick
     bug.textContent = brick.textContent
@@ -298,7 +305,7 @@ function squashBug(brick, bug) {
     bug.classList.remove("bug")
     bug.classList.add("smushed")
 
-    alert("Bug Squashed! 💥")
+    alert(`Bug Squashed! ${String.fromCodePoint(128165)}`) // 💥
 
     bugCheck() // check for remaining bugs and update mirror-mode accordingly
 
@@ -404,7 +411,6 @@ function bugCheck() {
     for (let count = 0; count < tiles.length; count++) {
         let tile = tiles[count]
 
-        console.log("bug checking tile:", tile)
         if (tile.classList.contains("bug")) {
             gameDiv.setAttribute('mirror-mode', 'on')
             return true
@@ -427,40 +433,37 @@ function noNeighborsBugSOFF() {
     for (let count = 0; count < tiles.length; count++) {
         let tile = tiles[count]
 
-        let i = parseInt(tile.parentNode.getAttribute('row-id'))
-        let j = parseInt(tile.getAttribute('col-id'))
-        // odd row, then even colum, or even row and odd column // also - not blank!!
-        if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
-            if (i >= 1) {
-                let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
-                if (canCombineBugSOFF(tile, upNeighbor)) {
-                    console.log("found a pair!", tile, upNeighbor, tile.classList, !tile.classList.contains("blank"))
-                    return false
+        if (!tile.classList.contains("bug")) {
+            let i = parseInt(tile.parentNode.getAttribute('row-id'))
+            let j = parseInt(tile.getAttribute('col-id'))
+            // odd row, then even colum, or even row and odd column // also - not blank!!
+            if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
+                if (i >= 1) {
+                    let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
+                    if (canCombineBugSOFF(tile, upNeighbor)) {
+                        return false
+                    }
                 }
-            }
-            if (i <= 2) {
-                let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-                if (canCombineBugSOFF(tile, downNeighbor)) {
-                    console.log("found a pair!", tile, downNeighbor)
-                    return false
+                if (i <= 2) {
+                    let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
+                    if (canCombineBugSOFF(tile, downNeighbor)) {
+                        return false
+                    }
                 }
-            }
-            if (j >= 1) {
-                let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
-                if (canCombineBugSOFF(tile, leftNeighbor)) {
-                    console.log("found a pair!", tile, leftNeighbor)
-                    return false
+                if (j >= 1) {
+                    let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
+                    if (canCombineBugSOFF(tile, leftNeighbor)) {
+                        return false
+                    }
                 }
-            }
-            if (j <= 2) {
-                let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-                if (canCombineBugSOFF(tile, rightNeighbor)) {
-                    console.log("found a pair!", tile, rightNeighbor)
-                    return false
+                if (j <= 2) {
+                    let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
+                    if (canCombineBugSOFF(tile, rightNeighbor)) {
+                        return false
+                    }
                 }
             }
         }
-
     }
     return true
 }

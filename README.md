@@ -52,6 +52,10 @@ bugs
 **** make an alert("Bug Squashed!") when a bug has been squashed
 
 
-*** Lights Out should start with one (some?) random lit tile ! Otherwise too easy
-
 ** "this game's scores' shouldn't include open games right? need to fix
+
+
+** add game over method to bugsoff (and others?)
+** sleep before game over alerts
+
+** make a nice readme
