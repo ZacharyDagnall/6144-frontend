@@ -29,6 +29,12 @@
     verticle
 }
 
+.bug-tile{
+    width: 68px;
+    height: 68px;
+    font-size: 61px;
+}
+
 .bug{
     width: 68px;
     height: 68px;
