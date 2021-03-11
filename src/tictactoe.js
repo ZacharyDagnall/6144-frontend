@@ -220,6 +220,7 @@ function tictactoe() {
         buttons.classList.remove("hidden")
         gameDiv.classList.add("hidden")
         document.removeEventListener("click", handleTTTClick)
+        handleGameOverTTT()
         return true
     }
     else if (threeInARowTTT("oh")) {
@@ -230,6 +231,7 @@ function tictactoe() {
         buttons.classList.remove("hidden")
         gameDiv.classList.add("hidden")
         document.removeEventListener("click", handleTTTClick)
+        handleGameOverTTT()
         return true
     }
     // else nothing; game continues

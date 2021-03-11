@@ -101,7 +101,7 @@ function goodbyeUser() {
 }
 
 function welcomeUser(user) {
-    welcome.textContent = `Welcome ${user.name}`
+    welcome.textContent = `Welcome ${user.name}!`
     welcome.dataset.id = user.id
     myScores(user.id)
     let logout = document.querySelector("#logout")
