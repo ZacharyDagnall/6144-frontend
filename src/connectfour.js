@@ -85,7 +85,7 @@ function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
         dropTokenC4(String.fromCodePoint(10060), tile)          // ❌  
-        sleepC4(1100).then(() => { randOC4() });
+        sleep(700).then(() => { randOC4() });
         blankZeroesC4()
         incrementScoreC4(-20)
         saveC4()
@@ -117,10 +117,6 @@ function handleGameOverC4() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
-}
-
-function sleepC4(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function dropTokenC4(token, tile) {
@@ -202,12 +198,6 @@ function saveC4(game_over = checkGameOverC4()) {
     })
         .then(r => r.json())
         .then(game => {
-            //if it comes back as game_over, invoke handleGameOver()
-
-            if (game.game_over) {
-                //handle Game over -> should stop the rest from executing ?
-            }
-
             // console.log("After Save: ")
             // console.log(`Score: ${game.score}`)
             // console.log(`Board: ${game.board_state}`)
@@ -219,16 +209,13 @@ function saveC4(game_over = checkGameOverC4()) {
 function checkGameOverC4() {
     if (connect4()) {
         //win or lose
-        handleGameOverC4()
         return true
     } else if (blanks.length === 0) {
         //stale mate, it's a draw. Do something?
-        alert("Stale Mate :/")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
-        handleGameOverC4()
+        sleep(500).then(() => {
+            alert("Stale Mate :/")
+            handleGameOverC4()
+        })
         return true
     }
     return false     //game continues; it's not over
@@ -238,21 +225,19 @@ function connect4() {
     if (fourInARowC4("ex")) {
         // you win!
         incrementScoreC4(80)
-        alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
+        sleep(500).then(() => {
+            alert("You Won! :D Your score was: " + htmlScore.firstElementChild.textContent + " Wow!!")
+            handleGameOverC4()
+        })
         return true
     }
     else if (fourInARowC4("oh")) {
         // you lose!
         incrementScoreC4(-80)
-        alert("You Lost! :( Your score was: " + htmlScore.firstElementChild.textContent + " Better Luck Next Time!!")
-        document.removeEventListener("click", handleC4Click)
-        let buttons = document.querySelector("#game-buttons")
-        buttons.classList.remove("hidden")
-        gameDiv.classList.add("hidden")
+        sleep(500).then(() => {
+            alert("You Lost! :( Your score was: " + htmlScore.firstElementChild.textContent + " Better Luck Next Time!!")
+            handleGameOverC4()
+        })
         return true
     }
     // else nothing; game continues
@@ -275,7 +260,6 @@ function fourInARowC4(symb) {
 function checkRow(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (j < 6) {
@@ -289,7 +273,6 @@ function checkRow(symb, tile, num) {
 function checkCol(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6) {
@@ -302,7 +285,6 @@ function checkCol(symb, tile, num) {
 function checkMajDiag(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6 && j < 6) {
@@ -315,7 +297,6 @@ function checkMajDiag(symb, tile, num) {
 function checkMinDiag(symb, tile, num) {
     let i = parseInt(tile.parentNode.getAttribute('row-id'))
     let j = parseInt(tile.getAttribute('col-id'))
-    console.log("indices:", i, j)
     if (num === 1) {
         return (tile.classList.contains(symb))
     } else if (i < 6 && j > 0) {
