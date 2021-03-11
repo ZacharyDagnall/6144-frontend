@@ -116,7 +116,7 @@ function handleGameOverTTT() {
     myScores(welcome.dataset.id)
 }
 
-function sleepTTT(ms) {
+function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -126,7 +126,7 @@ function placeTokenTTT(token, tile) {
     tile.classList.add("ex")
     tile.classList.add("ocupado")
     blanks = document.querySelectorAll('.empty')
-    sleepTTT(1100).then(() => { randOTTT() });
+    sleep(1100).then(() => { randOTTT() });
     blankZeroesTTT()
     incrementScoreTTT(-10)
     console.log("tile clicked, your move")

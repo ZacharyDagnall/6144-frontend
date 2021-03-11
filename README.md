@@ -1,32 +1,7 @@
-TO-DONE List
-* other moves
-*** left, down, up
-*** save to DB
-* smush
-* score
-*** just tack on score to DOM
-*** save to DB
-* add a random new tile
-*** on a random blank tile (either 3 or 6)
-* fail state
-*** if no blanks exist && no possible smushes
-****** no smushes: no two adjacent twins
-** what to do when game over !!
-* picking up a game where you left off
-* signing in
-* new game button
-*** create request
-*** make new board
-*** load new board
-** list of *your* scores before you click on a game
-** list of leaderboard scores when you are clicked on a game
-**delete button for a score
-**quit button
-** change on backend names of games ("soff" = 6144)
+
 
 TO-DO list
 * what to do when game over, after alert is closed (doesn't quite work right now?) 
-** make stuff pretty (Thursday) (CSS)
 ** take a look at logout button from connect 4 
 ** sleep gameover alert
 ** Fix open game scores showing

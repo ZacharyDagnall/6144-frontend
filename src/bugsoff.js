@@ -152,7 +152,7 @@ function swipeUpBugSOFF() {
     console.log("swiped up!")
     for (let j = 0; j < 4; j++) {
         for (let i = 0; i < 4; i++) {
-            moveUpBugSOFF(i, j)
+            sleep(150).then(() => { moveUpBugSOFF(i, j) });
         }
     }
     newTileBugSOFF()
@@ -162,7 +162,7 @@ function swipeDownBugSOFF() {
     console.log("swiped down!")
     for (let j = 0; j < 4; j++) {
         for (let i = 3; i >= 0; i--) {
-            moveDownBugSOFF(i, j)
+            sleep(150).then(() => { moveDownBugSOFF(i, j) })
         }
     }
     newTileBugSOFF()
@@ -172,7 +172,7 @@ function swipeLeftBugSOFF() {
     console.log("swiped left!")
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            moveLeftBugSOFF(i, j)
+            sleep(150).then(() => { moveLeftBugSOFF(i, j) })
         }
     }
     newTileBugSOFF()
@@ -182,7 +182,7 @@ function swipeRightBugSOFF() {
     console.log("swiped right!")
     for (let i = 0; i < 4; i++) {
         for (let j = 3; j >= 0; j--) {
-            moveRightBugSOFF(i, j)
+            sleep(150).then(() => { moveRightBugSOFF(i, j) })
         }
     }
     newTileBugSOFF()
@@ -198,7 +198,7 @@ function moveUpBugSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveUpBugSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpBugSOFF(i - 1, j) });
         } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -206,10 +206,10 @@ function moveUpBugSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveUpBugSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpBugSOFF(i - 1, j) });
         } else if (canSquashBug(htmlTile, nextTile)) {
             squashBug(htmlTile, nextTile)
-            moveUpBugSOFF(i - 1, j)
+            sleep(150).then(() => { moveUpBugSOFF(i - 1, j) });
         }
     }
     blankZeroesBugSOFF()
@@ -223,7 +223,7 @@ function moveDownBugSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveDownBugSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownBugSOFF(i + 1, j) })
         } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -231,10 +231,10 @@ function moveDownBugSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveDownBugSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownBugSOFF(i + 1, j) })
         } else if (canSquashBug(htmlTile, nextTile)) {
             squashBug(htmlTile, nextTile)
-            moveDownBugSOFF(i + 1, j)
+            sleep(150).then(() => { moveDownBugSOFF(i + 1, j) })
         }
     }
     blankZeroesBugSOFF()
@@ -248,7 +248,7 @@ function moveLeftBugSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveLeftBugSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftBugSOFF(i, j - 1) })
         } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -256,10 +256,10 @@ function moveLeftBugSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveLeftBugSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftBugSOFF(i, j - 1) })
         } else if (canSquashBug(htmlTile, nextTile)) {
             squashBug(htmlTile, nextTile)
-            moveLeftBugSOFF(i, j - 1)
+            sleep(150).then(() => { moveLeftBugSOFF(i, j - 1) })
         }
     }
     blankZeroesBugSOFF()
@@ -273,7 +273,7 @@ function moveRightBugSOFF(i, j) {
             nextTile.textContent = htmlTile.textContent
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
-            moveRightBugSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightBugSOFF(i, j + 1) })
         } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
@@ -281,10 +281,10 @@ function moveRightBugSOFF(i, j) {
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
-            moveRightBugSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightBugSOFF(i, j + 1) })
         } else if (canSquashBug(htmlTile, nextTile)) {
             squashBug(htmlTile, nextTile)
-            moveRightBugSOFF(i, j + 1)
+            sleep(150).then(() => { moveRightBugSOFF(i, j + 1) })
         }
     }
     blankZeroesBugSOFF()
