@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 #board {
     display: flex;
     flex-wrap: wrap; 
@@ -5,6 +7,10 @@
     height: 600px;
     background-color: rgb(45, 0, 77);
     margin: auto;
+}
+
+button{
+    font-family: 'Press Start 2P', cursive;
 }
 
 .row {
@@ -85,18 +91,34 @@ body{
 .hello{
     text-align: center
 }
-#banner{
+
+/* #game-buttons{
     background-color: rgb(45, 0, 77);
     display: flex;
     overflow-x: auto;
     margin: 1rem 0;
     max-width: calc(100vw - 2rem);
-}
+    border-style: solid;
+} */
 
 img{
     flex: 0 1 auto;
-    height: 150px;
-    margin-right: 0.5rem;
+    height: 189px;
+    margin-right: 2.5rem;
+}
+
+ul.banner{
+    list-style-type:none;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(40, 1, 69);
+    border-style: solid;
+    border-color: rgb(40, 1, 69);
+
+}
+#logout{
+    position: relative;
+    left: 47%;
 }
 
 /* This starts the CSS arcade Machine */
