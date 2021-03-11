@@ -219,10 +219,16 @@ function saveC4(game_over = checkGameOverC4()) {
 function checkGameOverC4() {
     if (connect4()) {
         //win or lose
+        handleGameOverC4()
         return true
     } else if (blanks.length === 0) {
         //stale mate, it's a draw. Do something?
         alert("Stale Mate :/")
+        document.removeEventListener("click", handleC4Click)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
+        handleGameOverC4()
         return true
     }
     return false     //game continues; it's not over

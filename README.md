@@ -27,6 +27,9 @@ TO-DONE List
 TO-DO list
 * what to do when game over, after alert is closed (doesn't quite work right now?) 
 ** make stuff pretty (Thursday) (CSS)
+** take a look at logout button from connect 4 
+** sleep gameover alert
+** Fix open game scores showing
 
 
 Doably Stretchy

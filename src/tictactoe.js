@@ -216,12 +216,20 @@ function tictactoe() {
         // you win!
         alert("You Won! :D")
         incrementScoreTTT(50)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
+        document.removeEventListener("click", handleTTTClick)
         return true
     }
     else if (threeInARowTTT("oh")) {
         // you lose!
         alert("You Lost! :(")
         incrementScoreTTT(-50)
+        let buttons = document.querySelector("#game-buttons")
+        buttons.classList.remove("hidden")
+        gameDiv.classList.add("hidden")
+        document.removeEventListener("click", handleTTTClick)
         return true
     }
     // else nothing; game continues
