@@ -17,6 +17,7 @@ Maybe:
 ** in Connect 4, doesnt register a *lose* immediately, waits until next click... why?
 
 ** "this game's scores' shouldn't include open games right? need to fix
+**** can we also change this to be the top 10 scores only, from high to low?
 
 ** make a nice readme
 ** now we need music

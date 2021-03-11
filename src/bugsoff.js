@@ -312,13 +312,17 @@ function canCombineBugSOFF(tile1, tile2) {
 function squashBug(brick, bug) {
     incrementScoreBugSOFF(3 * parseInt(brick.textContent))  //big pay off because this is hard
 
+    //need these for alert, before they are changed
+    let bugText = bug.textContent
+    let brickText = brick.textContent
+
     //replace bug tile with brick
     bug.textContent = brick.textContent
     brick.textContent = 0
     bug.classList.remove("bug")
     bug.classList.add("smushed")
 
-    sleep(150).then(() => { alert(`Bug Squashed! ${String.fromCodePoint(128165)}`) }) // 💥
+    sleep(150).then(() => { alert(`A ${bugText} bug was ${String.fromCodePoint(128165)}squashed${String.fromCodePoint(128165)} by a ${brickText} tile!! Great job!`) }) // 💥
 
     bugCheck() // check for remaining bugs and update mirror-mode accordingly
 
