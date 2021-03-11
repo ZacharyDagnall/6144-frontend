@@ -47,7 +47,10 @@ Maybe:
 ***** rename similarly named methods
 
 bugs
-**** if you add two spiders together it tries to parseInt and tries to add to score
+**** there can be a bug sheet on the side that appears when bugCheck returns true and becomes hidden again when bugCheck is false
+**** a bug can't be killed by sliding into a tile, but only by a tile sliding into it. 
+**** make an alert("Bug Squashed!") when a bug has been squashed
+
 
 *** Lights Out should start with one (some?) random lit tile ! Otherwise too easy
 

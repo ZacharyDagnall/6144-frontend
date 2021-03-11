@@ -2,7 +2,8 @@
 
 
 const newBugSOFFNums = ["3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6", "3", "6"]
-const bugs = [String.fromCodePoint(128027), String.fromCodePoint(128028), String.fromCodePoint(128029), String.fromCodePoint(128030), String.fromCodePoint(129439), String.fromCodePoint(129410), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128375), String.fromCodePoint(128012), String.fromCodePoint(129431)]
+const bugs = [String.fromCodePoint(128030), String.fromCodePoint(128027), String.fromCodePoint(128012), String.fromCodePoint(128028), String.fromCodePoint(129431), String.fromCodePoint(128029), String.fromCodePoint(129439), String.fromCodePoint(128375), String.fromCodePoint(129410), String.fromCodePoint(128375)]
+const bugSquashNums = [3, 6, 12, 24, 48, 96, 1, 1, 1, 1, 1, 1]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
@@ -73,6 +74,7 @@ function loadBoardBugSOFF(board) {  //render board (new or updated)
         newTileBugSOFF()
         newTileBugSOFF()
     }
+    bugCheck()
 }
 function loadScoreBugSOFF(score) {
     htmlScore = document.querySelector('#score')
@@ -189,13 +191,16 @@ function moveUpBugSOFF(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveUpBugSOFF(i - 1, j)
-        } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+        } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
+            moveUpBugSOFF(i - 1, j)
+        } else if (canSquashBug(htmlTile, nextTile)) {
+            squashBug(htmlTile, nextTile)
             moveUpBugSOFF(i - 1, j)
         }
     }
@@ -211,13 +216,16 @@ function moveDownBugSOFF(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveDownBugSOFF(i + 1, j)
-        } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+        } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
+            moveDownBugSOFF(i + 1, j)
+        } else if (canSquashBug(htmlTile, nextTile)) {
+            squashBug(htmlTile, nextTile)
             moveDownBugSOFF(i + 1, j)
         }
     }
@@ -233,13 +241,16 @@ function moveLeftBugSOFF(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveLeftBugSOFF(i, j - 1)
-        } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+        } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
             htmlScore = document.querySelector('#score')
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
+            moveLeftBugSOFF(i, j - 1)
+        } else if (canSquashBug(htmlTile, nextTile)) {
+            squashBug(htmlTile, nextTile)
             moveLeftBugSOFF(i, j - 1)
         }
     }
@@ -255,7 +266,7 @@ function moveRightBugSOFF(i, j) {
             nextTile.classList.remove("blank")
             htmlTile.textContent = 0
             moveRightBugSOFF(i, j + 1)
-        } else if (canCombine(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
+        } else if (canCombineBugSOFF(htmlTile, nextTile) && !htmlTile.classList.contains("smushed") && !nextTile.classList.contains("smushed")) {
             let score = parseInt(htmlTile.textContent) + parseInt(nextTile.textContent)
             nextTile.textContent = score
             nextTile.classList.add("smushed")
@@ -263,33 +274,48 @@ function moveRightBugSOFF(i, j) {
             loadScoreBugSOFF(parseInt(htmlScore.firstElementChild.textContent) + score)
             htmlTile.textContent = 0
             moveRightBugSOFF(i, j + 1)
+        } else if (canSquashBug(htmlTile, nextTile)) {
+            squashBug(htmlTile, nextTile)
+            moveRightBugSOFF(i, j + 1)
         }
     }
     blankZeroesBugSOFF()
 }
-function canCombine(tile1, tile2) {
-
+function canCombineBugSOFF(tile1, tile2) {
     if (bugs.indexOf(tile1.textContent) >= 0 || bugs.indexOf(tile1.textContent) >= 0) {
         return false
     }
     return tile1.textContent === tile2.textContent
-    // let a = parseInt(tile1.textContent)
-    // let b = parseInt(tile2.textContent)
-    // let m; //.indexOf(a)
-    // let n; //.indexOf(b)
-
-    // if (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0) {
-    //     console.log(`I can combine (${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n})`)
-    // } else console.log((`(${tile1}, ${a}, ${m}) and (${tile2}, ${b}, ${n}) cannot be combined`))
-
-    // return (((Math.abs(m - n) == 1) || (a == 1 && b == 1)) && a !== 0 && b !== 0)
 }
 
-function squashBug() {
-    //nothing yet
+function squashBug(brick, bug) {
+    incrementScoreBugSOFF(3 * parseInt(brick.textContent))  //big pay off because this is hard
+    console.log("score updated")
 
-    //turn off mirror mode? here or somewhere else.
-    //oh check to make sure that there are no other bugs even though you squashed this one
+    //replace bug tile with brick
+    bug.textContent = brick.textContent
+    brick.textContent = 0
+    bug.classList.remove("bug")
+    bug.classList.add("smushed")
+
+    alert("Bug Squashed! 💥")
+
+    bugCheck() // check for remaining bugs and update mirror-mode accordingly
+
+    blankZeroesBugSOFF()
+}
+
+function canSquashBug(brick, bug) { //just checks if bug can be squashed by this brick
+    return (bug.classList.contains("bug") && (parseInt(brick.textContent) >= squashNum(bug)) && !brick.classList.contains("smushed"))
+}
+
+function squashNum(bug) {
+    return bugSquashNums[bugs.indexOf(bug.textContent)]
+}
+
+function incrementScoreBugSOFF(score) {
+    htmlScore = document.querySelector('#score')
+    loadScoreC4(parseInt(htmlScore.firstElementChild.textContent) + score)
 }
 
 function blankZeroesBugSOFF() {
@@ -384,6 +410,7 @@ function bugCheck() {
             return true
         }
     }
+    gameDiv.setAttribute('mirror-mode', 'off')
     return false
 }
 
@@ -406,28 +433,28 @@ function noNeighborsBugSOFF() {
         if ((i % 2 == 1 && j % 2 == 0) || (i % 2 == 0 && j % 2 == 1)) {
             if (i >= 1) {
                 let upNeighbor = document.querySelector(`[row-id="${i - 1}"]`).querySelector(`[col-id="${j}"]`)
-                if (canCombine(tile, upNeighbor)) {
+                if (canCombineBugSOFF(tile, upNeighbor)) {
                     console.log("found a pair!", tile, upNeighbor, tile.classList, !tile.classList.contains("blank"))
                     return false
                 }
             }
             if (i <= 2) {
                 let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-                if (canCombine(tile, downNeighbor)) {
+                if (canCombineBugSOFF(tile, downNeighbor)) {
                     console.log("found a pair!", tile, downNeighbor)
                     return false
                 }
             }
             if (j >= 1) {
                 let leftNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j - 1}"]`)
-                if (canCombine(tile, leftNeighbor)) {
+                if (canCombineBugSOFF(tile, leftNeighbor)) {
                     console.log("found a pair!", tile, leftNeighbor)
                     return false
                 }
             }
             if (j <= 2) {
                 let rightNeighbor = document.querySelector(`[row-id="${i}"]`).querySelector(`[col-id="${j + 1}"]`)
-                if (canCombine(tile, rightNeighbor)) {
+                if (canCombineBugSOFF(tile, rightNeighbor)) {
                     console.log("found a pair!", tile, rightNeighbor)
                     return false
                 }
