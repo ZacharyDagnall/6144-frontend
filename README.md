@@ -5,7 +5,7 @@ Game Boyz Arcade was written as a phase 3 project for the Flatiron School Engine
 
 Within the app, a user can sign in using their name. There is no current authecation implemented. If a username mathcing the entered text has been saved to the database previously, their games will be loaded. If the username does not exist, a new user will be created. 
 
-Once logged on the user will be able to play any of the seven games, each move will save your progress. If a user has a previous game open, the app will load that saved game when you click on the respective game. 
+Once logged on the user will be able to play any of the six games, each move will save your progress. If a user has a previous game open, the app will load that saved game when you click on the respective game. 
 
 ## Tic Tac Toe
 
