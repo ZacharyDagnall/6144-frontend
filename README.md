@@ -1,7 +1,7 @@
 # Game Boyz Arcade
 
 ## Introduction
-Game Boyz Arcade was written as a phase 3 project for the Flatiron School Engineering program as a Single-page Web-app with a Ruby on Rails API backend. The back end API can be found [here](https://github.com/ZacharyDagnall/6144-backend). 
+Game Boyz Arcade was written as a phase 3 project for the Flatiron School Engineering program as a Single-page Web-app with a Ruby on Rails API backend. The back end API can be found [here](https://github.com/ZacharyDagnall/GameBoyzArcade-backend). 
 
 Within the app, a user can sign in using their name. There is no current authentication implemented. If a username matching the entered text has been saved to the database previously, their games will be loaded. If the username does not exist, a new user will be created. 
 
