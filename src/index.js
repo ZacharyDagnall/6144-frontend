@@ -4,7 +4,7 @@ const welcome = document.querySelector("#welcome")
 const gameDiv = document.querySelector("#game")
 
 const music = new Audio("./music/DuckTalesMoonTheme.mp3")
-music.volume = .3
+music.volume = .07
 music.loop = true
 
 document.addEventListener("DOMContentLoaded", e => {
@@ -155,6 +155,3 @@ document.addEventListener("click", e => {
     }
 })
 
-// document.addEventListener("mouseover", e =>{
-//     if
-// })
