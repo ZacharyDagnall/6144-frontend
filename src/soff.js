@@ -38,6 +38,7 @@ function startSOFF() {  //create HTML items on document
     quitButton.removeEventListener("click", handleQuitSOFF)
     quitButton.addEventListener("click", handleQuitSOFF)
     fillScoresSOFF()
+    fillRulesSOFF()
     document.removeEventListener("keydown", handleSOFFKey)
     document.addEventListener("keydown", handleSOFFKey)
     fetchBoardSOFF()
@@ -88,6 +89,18 @@ function fillScoresSOFF() {
         })
 }
 
+function fillRulesSOFF(){
+    fetch("http://localhost:3000/games/rules/6144")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesSOFF(){
+    rules.textContent= ""
+}
+
 function handleSOFFKey(event) {
     tiles.forEach(tile => {
         tile.classList.remove("smushed")
@@ -112,6 +125,7 @@ function handleQuitSOFF() {
     alert("Game Ended! (You quitter)")
     gameDiv.classList.add("hidden")
     music.play()
+    clearRulesSOFF()
 
     let buttons = document.querySelector("#game-buttons")
     buttons.classList.remove("hidden")
@@ -334,6 +348,7 @@ function checkGameOverSOFF() {
             let logoutButton = document.querySelector("#logout")
             logoutButton.classList.remove("hidden")
             myScores(welcome.dataset.id)
+            clearRulesSOFF()
         })
         return true
     } else {

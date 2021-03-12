@@ -35,6 +35,7 @@ function startTTT() {  //create HTML items on document
     document.removeEventListener("click", handleTTTClick)
     document.addEventListener("click", handleTTTClick)
     fetchBoardTTT()
+    fillRulesT()
 }
 function fetchBoardTTT() {
     fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/TicTacToe`)
@@ -89,6 +90,18 @@ function fillScoresTTT() {
         })
 }
 
+function fillRulesT(){
+    fetch("http://localhost:3000/games/rules/TicTacToe")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesT(){
+    rules.textContent= ""
+}
+
 function handleTTTClick(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
@@ -110,6 +123,7 @@ function handleQuitTTT() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesT()
 }
 function handleGameOverTTT() {
     document.removeEventListener("click", handleTTTClick)
@@ -123,6 +137,7 @@ function handleGameOverTTT() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesT()
 }
 
 function sleep(ms) {

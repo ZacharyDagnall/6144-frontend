@@ -25,7 +25,7 @@ Connect 4 now arrives to Game Boyz Arcade! Click anywhere on the board to drop a
 
 ## Lights Out!
 
-An inLIGHTening puzzle game. Click on a tile on the board to turn it and its nieghbors on and off. Watch out though, every click costs you 25 points; you'll game over if you run out of points! Can you light up the whole board in time? 
+An enLIGHTening puzzle game. Click on a tile on the board to turn it and its nieghbors on and off. Watch out though, every click costs you 25 points; you'll game over if you run out of points! Can you light up the whole board in time? 
 
 ## Bug Mode?
 

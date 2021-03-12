@@ -55,6 +55,7 @@ function startBugSOFF() {  //create HTML items on document
     document.removeEventListener("keydown", handleBugSOFFKey)
     document.addEventListener("keydown", handleBugSOFFKey)
     fetchBoardBugSOFF()
+    fillRulesBug()
 }
 function fetchBoardBugSOFF() {
     fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/6144BugMode`)
@@ -86,6 +87,19 @@ function loadBoardBugSOFF(board) {  //render board (new or updated)
     }
     bugCheck()
 }
+
+function fillRulesBug(){
+    fetch("http://localhost:3000/games/rules/6144BugMode")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesBug(){
+    rules.textContent= ""
+}
+
 function loadScoreBugSOFF(score) {
     htmlScore = document.querySelector('#score')
     htmlScore.firstElementChild.textContent = score
@@ -149,6 +163,7 @@ function handleQuitBugSOFF() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesBug()
 }
 
 function swipeUpBugSOFF() {
@@ -451,6 +466,7 @@ function checkGameOverBugSOFF() {
             let logoutButton = document.querySelector("#logout")
             logoutButton.classList.remove("hidden")
             myScores(welcome.dataset.id)
+            clearRulesBug()
         })
         return true
     } else {

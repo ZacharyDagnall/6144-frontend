@@ -41,6 +41,7 @@ function startFibSOFF() {  //create HTML items on document
     document.removeEventListener("keydown", handleFibSOFFKey)
     document.addEventListener("keydown", handleFibSOFFKey)
     fetchBoardFibSOFF()
+    fillRulesFibSOFF()
 }
 function fetchBoardFibSOFF() {
     fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/FibonacciTiles`)
@@ -88,6 +89,18 @@ function fillScoresFibSOFF() {
         })
 }
 
+function fillRulesFibSOFF(){
+    fetch("http://localhost:3000/games/rules/FibonacciTiles")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesFibSOFF(){
+    rules.textContent= ""
+}
+
 function handleFibSOFFKey(event) {
     tiles.forEach(tile => {
         tile.classList.remove("smushed")
@@ -119,6 +132,7 @@ function handleQuitFibSOFF() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesFibSOFF()
 }
 
 function swipeUpFibSOFF() {
@@ -343,6 +357,7 @@ function checkGameOverFibSOFF() {
             let logoutButton = document.querySelector("#logout")
             logoutButton.classList.remove("hidden")
             myScores(welcome.dataset.id)
+            clearRulesFibSOFF()
         })
         return true
     } else {

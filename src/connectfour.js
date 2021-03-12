@@ -35,6 +35,7 @@ function startC4() {  //create HTML items on document
     document.removeEventListener("click", handleC4Click)
     document.addEventListener("click", handleC4Click)
     fetchBoardC4()
+    fillRulesC4()
 }
 function fetchBoardC4() {
     fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/Connect4`)
@@ -89,6 +90,18 @@ function fillScoresC4() {
         })
 }
 
+function fillRulesC4(){
+    fetch("http://localhost:3000/games/rules/Connect4")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesC4(){
+    rules.textContent= ""
+}
+
 function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
@@ -115,6 +128,7 @@ function handleQuitC4() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesC4()
 }
 function handleGameOverC4() {
     document.removeEventListener("click", handleC4Click)
@@ -128,6 +142,7 @@ function handleGameOverC4() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesC4()
 }
 
 function dropTokenC4(token, tile) {

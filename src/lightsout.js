@@ -41,6 +41,7 @@ function startLight() {  //create HTML items on document
     document.removeEventListener("click", handleLightPress)
     document.addEventListener("click", handleLightPress)
     fetchBoardLight()
+    fillRulesLight()
 }
 
 function fetchBoardLight() {
@@ -83,6 +84,19 @@ function fillScoresLight() {
             })
         })
 }
+
+function fillRulesLight(){
+    fetch("http://localhost:3000/games/rules/LightsOut")
+    .then(r => r.text())
+    .then(rule => {
+        rules.textContent = rule
+    })
+}
+
+function clearRulesLight(){
+    rules.textContent= ""
+}
+
 function handleLightPress(event) {
     if (event.target.matches(".tile")) {
         event.stopPropagation()
@@ -192,6 +206,7 @@ function handleQuitLight() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesLight()
 }
 function handleGameOverLight() {
     document.removeEventListener("click", handleLightPress)
@@ -205,6 +220,7 @@ function handleGameOverLight() {
     let logoutButton = document.querySelector("#logout")
     logoutButton.classList.remove("hidden")
     myScores(welcome.dataset.id)
+    clearRulesLight()
 }
 
 

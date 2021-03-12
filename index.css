@@ -94,6 +94,12 @@ body{
     text-align: center
 }
 
+#score{
+    text-align: center;
+}
+
+
+
 /* #game-buttons{
     background-color: rgb(45, 0, 77);
     display: flex;
@@ -121,6 +127,11 @@ ul.banner{
 #logout{
     position: relative;
     left: 46%;
+}
+
+.rules{
+    display: flex;
+    flex-flow: row wrap
 }
 
 /* This starts the CSS arcade Machine */
