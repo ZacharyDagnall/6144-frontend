@@ -106,7 +106,7 @@ function handleC4Click(event) {
     if (event.target.matches('.tile') && !event.target.classList.contains("ocupado")) {
         let tile = event.target
         dropTokenC4(String.fromCodePoint(10060), tile)          // ❌  
-        if (!checkGameOverC4()) {
+        if (!saveC4()) {
             sleep(700).then(() => { randOC4() });
             blankZeroesC4()
             incrementScoreC4(-20)
@@ -151,7 +151,7 @@ function dropTokenC4(token, tile) {
     placeTokenC4(token, tile)
     if (i < 6) {                //not at the bottom, let's check the spot below
         let downNeighbor = document.querySelector(`[row-id="${i + 1}"]`).querySelector(`[col-id="${j}"]`)
-        if (!downNeighbor.classList.contains('ocupado')) {   //the one below us is empty, so remove and keep falling 
+        if (!downNeighbor.classList.contains('ocupado')) {   //the one below us is empty, so remove this one and keep falling 
             sleep(90).then(() => {
                 removeTokenC4(token, tile)
                 dropTokenC4(token, downNeighbor)
@@ -199,11 +199,11 @@ function blankZeroesC4() {
             tile.classList.add("empty")
         } else {
             tile.classList.remove("empty")
-            //if (tile.textContent ==)
         }
         tile.style.backgroundColor = getColorC4(tile.textContent)
     })
     blanks = document.querySelectorAll('.empty')
+    return blanks.length
 }
 
 function getColorC4(val) {
@@ -229,7 +229,7 @@ function saveC4(game_over = checkGameOverC4()) {
     // console.log(`Board: ${board}`)
     // console.log(`Status: ${game_over}`)
 
-
+    let done;
     fetch(`http://localhost:3000/games/${id}`, {
         method: 'PATCH',
         headers: {
@@ -244,15 +244,17 @@ function saveC4(game_over = checkGameOverC4()) {
             // console.log(`Score: ${game.score}`)
             // console.log(`Board: ${game.board_state}`)
             // console.log(`Status: ${game.game_over}`)
+            done = game.game_over
         })
     //don't need to do anything with saved board because we already updated the dom optimistically
+    return done
 }
 
 function checkGameOverC4() {
-    if (connect4()) {
+    if (connect4()) {   //there are four of something in a row
         //win or lose
         return true
-    } else if (blanks.length === 0) {
+    } else if (blankZeroesC4() === 0) {
         //stale mate, it's a draw. Do something?
         sleep(500).then(() => {
             alert("Stale Mate :/")
