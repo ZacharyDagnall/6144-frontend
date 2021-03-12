@@ -8,7 +8,7 @@ const bugSquashNums = [6, 12, 24, 48, 96, 192]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
-numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
+// numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
 function printBugCheatSheet() {
     let str = "When a bug appears, controls will  be reversed. \nYou need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
     for (let count = 0; count < 6; count++) {
