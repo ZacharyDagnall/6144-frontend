@@ -13,7 +13,7 @@ A classic game of Tic Tac Toe! Click on a space on the board to place your tile 
 
 ## 6144
 
-This game is 2048 but using an additive three instead of two. Use your arrow keys to move all the tiles on the board. Combine matching numbers to add them together, but be careful, when you make a move a new 3 or 6 will appear on the board. The gane is over when you have no available moves. See if you can reach the 6144 tile. 
+This game is 2048 but using an additive three instead of two. Use your arrow keys to move all the tiles on the board. Combine matching numbers to add them together, but be careful, when you make a move a new 3 or 6 will appear on the board. The game is over when you have no available moves. See if you can reach the 6144 tile. 
 
 ## Fibinacci tiles
 
@@ -25,11 +25,11 @@ Connect 4 now arrives to Game Boyz Arcade! Click anywhere on the board to drop a
 
 ## Lights Out!
 
-An inLIGHTening puzzle game. Click on a tile on the board to turn it and its nieghbors on and off. Watch out though, every click costs you 25 points; you'll game over if you run out of points! Can you light up the whole board in time? 
+An enLIGHTening puzzle game. Click on a tile on the board to turn it and its nieghbors on and off. Watch out though, every click costs you 25 points; you'll game over if you run out of points! Can you light up the whole board in time? 
 
 ## Bug Mode?
 
-Oh-uh! This version of 6144 wasnt ment to be pushed yet, its riddled with bugs!! Maybe you can help us de-bug it? The game plays like 6144: use your arrow keys to move all the tiles on the board and combine matching numbers to add them together. See you can figure out how to squash those bugs! 
+Uh-oh! This version of 6144 wasnt ment to be pushed yet, its riddled with bugs!! Maybe you can help us de-bug it? The game plays like 6144: use your arrow keys to move all the tiles on the board and combine matching numbers to add them together. See if you can figure out how to squash those bugs! 
 
 ## Credits
 
