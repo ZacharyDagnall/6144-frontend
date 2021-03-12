@@ -188,6 +188,7 @@ function blankZeroesC4() {
         tile.style.backgroundColor = getColorC4(tile.textContent)
     })
     blanks = document.querySelectorAll('.empty')
+    return blanks.length
 }
 
 function getColorC4(val) {
@@ -238,7 +239,7 @@ function checkGameOverC4() {
     if (connect4()) {   //there are four of something in a row
         //win or lose
         return true
-    } else if (blanks.length === 0) {
+    } else if (blankZeroesC4() === 0) {
         //stale mate, it's a draw. Do something?
         sleep(500).then(() => {
             alert("Stale Mate :/")
