@@ -310,6 +310,7 @@ function getColorFibSOFF(val) {
     }
 }
 
+
 function newTileFibSOFF() {
     if (blanks.length !== 0) {
         let randBlank = blanks[Math.floor(blanks.length * Math.random())]
