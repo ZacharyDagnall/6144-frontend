@@ -142,7 +142,7 @@ function swipeUpFibSOFF() {
             sleep(150).then(() => { moveUpFibSOFF(i, j) })
         }
     }
-    newTileFibSOFF()
+    sleep(150).then(() => { newTileFibSOFF() })
     saveFibSOFF()
 }
 function swipeDownFibSOFF() {
@@ -152,7 +152,7 @@ function swipeDownFibSOFF() {
             sleep(150).then(() => { moveDownFibSOFF(i, j) })
         }
     }
-    newTileFibSOFF()
+    sleep(150).then(() => { newTileFibSOFF() })
     saveFibSOFF()
 }
 function swipeLeftFibSOFF() {
@@ -162,7 +162,7 @@ function swipeLeftFibSOFF() {
             sleep(150).then(() => { moveLeftFibSOFF(i, j) })
         }
     }
-    newTileFibSOFF()
+    sleep(150).then(() => { newTileFibSOFF() })
     saveFibSOFF()
 }
 function swipeRightFibSOFF() {
@@ -172,7 +172,7 @@ function swipeRightFibSOFF() {
             sleep(150).then(() => { moveRightFibSOFF(i, j) })
         }
     }
-    newTileFibSOFF()
+    sleep(150).then(() => { newTileFibSOFF() })
     saveFibSOFF()
 }
 
