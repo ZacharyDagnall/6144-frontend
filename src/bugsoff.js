@@ -173,7 +173,7 @@ function swipeUpBugSOFF() {
             sleep(150).then(() => { moveUpBugSOFF(i, j) });
         }
     }
-    newTileBugSOFF()
+    sleep(500).then(() => { newTileBugSOFF() })
     saveBugSOFF()
     if (bugCheck()) {
         printBugCheatSheet()
@@ -186,7 +186,7 @@ function swipeDownBugSOFF() {
             sleep(150).then(() => { moveDownBugSOFF(i, j) })
         }
     }
-    newTileBugSOFF()
+    sleep(500).then(() => { newTileBugSOFF() })
     saveBugSOFF()
     if (bugCheck()) {
         printBugCheatSheet()
@@ -199,7 +199,7 @@ function swipeLeftBugSOFF() {
             sleep(150).then(() => { moveLeftBugSOFF(i, j) })
         }
     }
-    newTileBugSOFF()
+    sleep(500).then(() => { newTileBugSOFF() })
     saveBugSOFF()
     if (bugCheck()) {
         printBugCheatSheet()
@@ -212,7 +212,7 @@ function swipeRightBugSOFF() {
             sleep(150).then(() => { moveRightBugSOFF(i, j) })
         }
     }
-    newTileBugSOFF()
+    sleep(500).then(() => { newTileBugSOFF() })
     saveBugSOFF()
     if (bugCheck()) {
         printBugCheatSheet()

@@ -142,7 +142,7 @@ function swipeUpSOFF() {
             sleep(150).then(() => { moveUpSOFF(i, j) })
         }
     }
-    newTileSOFF()
+    sleep(500).then(() => { newTileSOFF() })
     saveSOFF()
 }
 function swipeDownSOFF() {
@@ -152,7 +152,7 @@ function swipeDownSOFF() {
             sleep(150).then(() => { moveDownSOFF(i, j) })
         }
     }
-    newTileSOFF()
+    sleep(500).then(() => { newTileSOFF() })
     saveSOFF()
 }
 function swipeLeftSOFF() {
@@ -162,7 +162,7 @@ function swipeLeftSOFF() {
             sleep(150).then(() => { moveLeftSOFF(i, j) })
         }
     }
-    newTileSOFF()
+    sleep(500).then(() => { newTileSOFF() })
     saveSOFF()
 }
 function swipeRightSOFF() {
@@ -172,7 +172,7 @@ function swipeRightSOFF() {
             sleep(150).then(() => { moveRightSOFF(i, j) })
         }
     }
-    newTileSOFF()
+    sleep(500).then(() => { newTileSOFF() })
     saveSOFF()
 }
 
