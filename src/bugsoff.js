@@ -120,7 +120,7 @@ function fillScoresBugSOFF() {
         })
 }
 
-function handleBugSOFFKey(event) {  //the event listener for this will need to be removed and re-added when toggling mirror-mode, i think.
+function handleBugSOFFKey(event) {
     tiles.forEach(tile => {
         tile.classList.remove("smushed")
     })
