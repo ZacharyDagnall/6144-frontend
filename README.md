@@ -15,9 +15,9 @@ A classic game of Tic Tac Toe! Click on a space on the board to place your tile 
 
 This game is 2048 but using an additive three instead of two. Use your arrow keys to move all the tiles on the board. Combine matching numbers to add them together, but be careful, when you make a move a new 3 or 6 will appear on the board. The game is over when you have no available moves. See if you can reach the 6144 tile. 
 
-## Fibinacci tiles
+## Fibonacci tiles
 
-Up for a challenge? Try Fibinacci Tiles, a new twist on 6144. Use your arrow keys to move all the tiles on the board. Two tiles will only combine when they add up to a Fibinacci number. Can you reach 6765?
+Up for a challenge? Try Fibonacci Tiles, a new twist on 6144. Use your arrow keys to move all the tiles on the board. Two tiles will only combine when they add up to a Fibinacci number. Can you reach 6765?
 
 ## Connect 4
 

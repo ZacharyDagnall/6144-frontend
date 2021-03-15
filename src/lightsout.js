@@ -45,7 +45,7 @@ function startLight() {  //create HTML items on document
 }
 
 function fetchBoardLight() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/LightsOut`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/LightsOut`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -74,7 +74,7 @@ function fillScoresLight() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "LightsOut Scores:"
-    fetch(`http://localhost:3000/games/LightsOut/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/LightsOut/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -85,16 +85,16 @@ function fillScoresLight() {
         })
 }
 
-function fillRulesLight(){
-    fetch("http://localhost:3000/games/rules/LightsOut")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesLight() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/LightsOut")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesLight(){
-    rules.textContent= ""
+function clearRulesLight() {
+    rules.textContent = ""
 }
 
 function handleLightPress(event) {
@@ -255,7 +255,7 @@ function saveLight(game_over = checkGameOverLight()) {
     console.log(`Status: ${game_over}`)
 
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

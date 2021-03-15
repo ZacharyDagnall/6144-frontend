@@ -44,7 +44,7 @@ function startFibSOFF() {  //create HTML items on document
     fillRulesFibSOFF()
 }
 function fetchBoardFibSOFF() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/FibonacciTiles`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/FibonacciTiles`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -78,7 +78,7 @@ function fillScoresFibSOFF() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "Fibonacci Tiles Scores:"
-    fetch(`http://localhost:3000/games/FibonacciTiles/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/FibonacciTiles/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -89,16 +89,16 @@ function fillScoresFibSOFF() {
         })
 }
 
-function fillRulesFibSOFF(){
-    fetch("http://localhost:3000/games/rules/FibonacciTiles")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesFibSOFF() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/FibonacciTiles")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesFibSOFF(){
-    rules.textContent= ""
+function clearRulesFibSOFF() {
+    rules.textContent = ""
 }
 
 function handleFibSOFFKey(event) {
@@ -299,6 +299,14 @@ function getColorFibSOFF(val) {
         case 89: return "#F5427B"
         case 144: return "#F5A142"
         case 233: return "#42F5E3"
+        case 377: return "#7FFFD4"
+        case 610: return "#8A2BE2"
+        case 987: return "#FF7F50"
+        case 1597: return "#00FFFF"
+        case 2584: return "#8B008B"
+        case 4181: return "#1E90FF"
+        case 6765: return "#FF1493"
+        default: return "#4B0082"
     }
 }
 
@@ -327,7 +335,7 @@ function saveFibSOFF(game_over = checkGameOverFibSOFF()) {
     // console.log(`Status: ${game_over}`)
 
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

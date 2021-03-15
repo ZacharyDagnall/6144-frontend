@@ -38,7 +38,7 @@ function startTTT() {  //create HTML items on document
     fillRulesT()
 }
 function fetchBoardTTT() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/TicTacToe`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/TicTacToe`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -79,7 +79,7 @@ function fillScoresTTT() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "TicTacToe Scores:"
-    fetch(`http://localhost:3000/games/TicTacToe/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/TicTacToe/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -90,16 +90,16 @@ function fillScoresTTT() {
         })
 }
 
-function fillRulesT(){
-    fetch("http://localhost:3000/games/rules/TicTacToe")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesT() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/TicTacToe")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesT(){
-    rules.textContent= ""
+function clearRulesT() {
+    rules.textContent = ""
 }
 
 function handleTTTClick(event) {
@@ -202,7 +202,7 @@ function saveTTT(game_over = checkGameOverTTT()) {
     // console.log(`Status: ${game_over}`)
 
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

@@ -44,7 +44,7 @@ function startSOFF() {  //create HTML items on document
     fetchBoardSOFF()
 }
 function fetchBoardSOFF() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/6144`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/6144`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -78,7 +78,7 @@ function fillScoresSOFF() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "6144 Scores:"
-    fetch(`http://localhost:3000/games/6144/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/6144/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -89,16 +89,16 @@ function fillScoresSOFF() {
         })
 }
 
-function fillRulesSOFF(){
-    fetch("http://localhost:3000/games/rules/6144")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesSOFF() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/6144")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesSOFF(){
-    rules.textContent= ""
+function clearRulesSOFF() {
+    rules.textContent = ""
 }
 
 function handleSOFFKey(event) {
@@ -318,7 +318,7 @@ function saveSOFF(game_over = checkGameOverSOFF()) {
     // console.log(`Status: ${game_over}`)
 
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

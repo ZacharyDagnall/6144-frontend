@@ -38,7 +38,7 @@ function startC4() {  //create HTML items on document
     fillRulesC4()
 }
 function fetchBoardC4() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/Connect4`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/Connect4`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -79,7 +79,7 @@ function fillScoresC4() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "Connect4 Scores:"
-    fetch(`http://localhost:3000/games/Connect4/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/Connect4/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -90,16 +90,16 @@ function fillScoresC4() {
         })
 }
 
-function fillRulesC4(){
-    fetch("http://localhost:3000/games/rules/Connect4")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesC4() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/Connect4")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesC4(){
-    rules.textContent= ""
+function clearRulesC4() {
+    rules.textContent = ""
 }
 
 function handleC4Click(event) {
@@ -230,7 +230,7 @@ function saveC4(game_over = checkGameOverC4()) {
     // console.log(`Status: ${game_over}`)
 
     let done;
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

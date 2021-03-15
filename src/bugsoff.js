@@ -8,7 +8,7 @@ const bugSquashNums = [6, 12, 24, 48, 96, 192]
 let numsNBugs = []
 numsNBugs.push.apply(numsNBugs, bugs)
 numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
-// numsNBugs.push.apply(numsNBugs, newBugSOFFNums)
+//numsNBugs.push.apply(numsNBugs, newBugSOFFNums)   //uncomment to make bugs get drawn half as frequently
 function printBugCheatSheet() {
     let str = "When a bug appears, controls will  be reversed. \nYou need to 'squash' a bug with a tile bigger than or equal to it's value: \n"
     for (let count = 0; count < 6; count++) {
@@ -58,7 +58,7 @@ function startBugSOFF() {  //create HTML items on document
     fillRulesBug()
 }
 function fetchBoardBugSOFF() {
-    fetch(`http://localhost:3000//users/${welcome.dataset.id}/nextgame/6144BugMode`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/6144BugMode`)
         .then(r => r.json())
         .then(game => {
             gameDiv.dataset.id = game.id
@@ -88,16 +88,16 @@ function loadBoardBugSOFF(board) {  //render board (new or updated)
     bugCheck()
 }
 
-function fillRulesBug(){
-    fetch("http://localhost:3000/games/rules/6144BugMode")
-    .then(r => r.text())
-    .then(rule => {
-        rules.textContent = rule
-    })
+function fillRulesBug() {
+    fetch("https://gameboyzarcade.herokuapp.com/games/rules/6144BugMode")
+        .then(r => r.text())
+        .then(rule => {
+            rules.textContent = rule
+        })
 }
 
-function clearRulesBug(){
-    rules.textContent= ""
+function clearRulesBug() {
+    rules.textContent = ""
 }
 
 function loadScoreBugSOFF(score) {
@@ -109,7 +109,7 @@ function fillScoresBugSOFF() {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "6144 Bug Mode Scores:"
-    fetch(`http://localhost:3000/games/6144BugMode/leaderboard`)
+    fetch(`https://gameboyzarcade.herokuapp.com/games/6144BugMode/leaderboard`)
         .then(r => r.json())
         .then(scores => {
             scores.forEach(score => {
@@ -423,7 +423,7 @@ function saveBugSOFF(game_over = checkGameOverBugSOFF()) {
     // console.log(`Status: ${game_over}`)
 
 
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

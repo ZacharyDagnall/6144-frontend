@@ -35,7 +35,7 @@ function login() {
     login.addEventListener("submit", e => {
         e.preventDefault()
         let username = e.target.name.value
-        fetch(`http://localhost:3000/users`)
+        fetch(`https://gameboyzarcade.herokuapp.com/users`)
             .then(r => r.json())
             .then(users => {
                 let foundUser = users.find(user => user.name == username)
@@ -57,7 +57,7 @@ function myScores(id) {
     let scoresList = document.querySelector("#scores-list")
     scoresList.replaceChildren()
     scoresList.textContent = "My Scores:"
-    fetch(`http://localhost:3000/users/${id}/scores`)
+    fetch(`https://gameboyzarcade.herokuapp.com/users/${id}/scores`)
         .then(r => r.json())
         .then(gameHashes => {
             gameHashes.forEach(gameHash => {
@@ -73,7 +73,7 @@ function myScores(id) {
         })
 }
 function deleteScore(id) {
-    fetch(`http://localhost:3000/games/${id}`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/games/${id}`, {
         method: "DELETE"
     })
         .then(r => r.json())
@@ -119,7 +119,7 @@ function welcomeUser(user) {
 }
 
 function makeNewUser(name) {
-    fetch(`http://localhost:3000/users`, {
+    fetch(`https://gameboyzarcade.herokuapp.com/users`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
