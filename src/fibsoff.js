@@ -42,6 +42,7 @@ function startFibSOFF() {  //create HTML items on document
     document.addEventListener("keydown", handleFibSOFFKey)
     fetchBoardFibSOFF()
     fillRulesFibSOFF()
+    mobileCon()
 }
 function fetchBoardFibSOFF() {
     fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/FibonacciTiles`)

@@ -56,6 +56,7 @@ function startBugSOFF() {  //create HTML items on document
     document.addEventListener("keydown", handleBugSOFFKey)
     fetchBoardBugSOFF()
     fillRulesBug()
+    mobileCon()
 }
 function fetchBoardBugSOFF() {
     fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/6144BugMode`)
