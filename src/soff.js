@@ -448,6 +448,9 @@ function mobileCon(){
         console.log(true)
         let bunny = document.querySelector('#board')
         swipeDetect(bunny, function(swipeDir){
+            tiles.forEach(tile => {
+                tile.classList.remove("smushed")
+            })
             if(swipeDir == 'left'){
                 swipeLeftSOFF()
             }else if(swipeDir == 'right'){
