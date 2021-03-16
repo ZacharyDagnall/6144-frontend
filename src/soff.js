@@ -458,5 +458,7 @@ function mobileCon(){
                 swipeDownSOFF()
             }
         })
+    } else {
+        return console.log("You are on a desktop")
     }
 }
