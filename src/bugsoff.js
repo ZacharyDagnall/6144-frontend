@@ -522,14 +522,26 @@ function mobileConBugSOFF(){
             tiles.forEach(tile => {
                 tile.classList.remove("smushed")
             })
-            if(swipeDir == 'left'){
-                swipeLeftBugSOFF()
-            }else if(swipeDir == 'right'){
-                swipeRightBugSOFF()
-            }else if(swipeDir == 'up'){
-                swipeUpBugSOFF()
-            }else if(swipeDir == 'down'){
-                swipeDownBugSOFF()
+            if (gameDiv.getAttribute('mirror-mode') === "off") {
+                if(swipeDir == 'left'){
+                    swipeLeftBugSOFF()
+                }else if(swipeDir == 'right'){
+                    swipeRightBugSOFF()
+                }else if(swipeDir == 'up'){
+                    swipeUpBugSOFF()
+                }else if(swipeDir == 'down'){
+                    swipeDownBugSOFF()
+                }
+            } else {
+                if(swipeDir == 'left'){
+                    swipeRightBugSOFF()
+                }else if(swipeDir == 'right'){
+                    swipeLeftBugSOFF()
+                }else if(swipeDir == 'up'){
+                    swipeDownBugSOFF()
+                }else if(swipeDir == 'down'){
+                    swipeUpBugSOFF()
+                }
             }
         })
     } else {
