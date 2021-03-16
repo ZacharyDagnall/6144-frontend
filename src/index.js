@@ -3,6 +3,7 @@ const body = document.querySelector("body")
 const welcome = document.querySelector("#welcome")
 const gameDiv = document.querySelector("#game")
 const rules = document.querySelector("#rule")
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
 const music = new Audio("./music/DuckTalesMoonTheme.mp3")
 music.volume = .07
