@@ -42,7 +42,7 @@ function startSOFF() {  //create HTML items on document
     document.removeEventListener("keydown", handleSOFFKey)
     document.addEventListener("keydown", handleSOFFKey)
     fetchBoardSOFF()
-    mobileCon()
+    mobileConSOFF()
 }
 function fetchBoardSOFF() {
     fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/6144`)
@@ -443,7 +443,7 @@ function swipeDetect(el, callback){
     }, false)
 }
 
-function mobileCon(){
+function mobileConSOFF(){
     if (isMobile){
         console.log(true)
         let bunny = document.querySelector('#board')

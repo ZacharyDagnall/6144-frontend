@@ -56,7 +56,7 @@ function startBugSOFF() {  //create HTML items on document
     document.addEventListener("keydown", handleBugSOFFKey)
     fetchBoardBugSOFF()
     fillRulesBug()
-    mobileCon()
+    mobileConBugSOFF()
 }
 function fetchBoardBugSOFF() {
     fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/6144BugMode`)
@@ -512,4 +512,27 @@ function noNeighborsBugSOFF() {
         }
     }
     return true
+}
+
+function mobileConBugSOFF(){
+    if (isMobile){
+        console.log(true)
+        let bunny = document.querySelector('#board')
+        swipeDetect(bunny, function(swipeDir){
+            tiles.forEach(tile => {
+                tile.classList.remove("smushed")
+            })
+            if(swipeDir == 'left'){
+                swipeLeftBugSOFF()
+            }else if(swipeDir == 'right'){
+                swipeRightBugSOFF()
+            }else if(swipeDir == 'up'){
+                swipeUpBugSOFF()
+            }else if(swipeDir == 'down'){
+                swipeDownBugSOFF()
+            }
+        })
+    } else {
+        return console.log("You are on a desktop")
+    }
 }

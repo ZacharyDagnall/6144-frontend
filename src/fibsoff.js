@@ -42,7 +42,7 @@ function startFibSOFF() {  //create HTML items on document
     document.addEventListener("keydown", handleFibSOFFKey)
     fetchBoardFibSOFF()
     fillRulesFibSOFF()
-    mobileCon()
+    mobileConFibSOFF()
 }
 function fetchBoardFibSOFF() {
     fetch(`https://gameboyzarcade.herokuapp.com/users/${welcome.dataset.id}/nextgame/FibonacciTiles`)
@@ -411,4 +411,27 @@ function noNeighborsFibSOFF() {
 
     }
     return true
+}
+
+function mobileConFibSOFF(){
+    if (isMobile){
+        console.log(true)
+        let bunny = document.querySelector('#board')
+        swipeDetect(bunny, function(swipeDir){
+            tiles.forEach(tile => {
+                tile.classList.remove("smushed")
+            })
+            if(swipeDir == 'left'){
+                swipeLeftFibSOFF()
+            }else if(swipeDir == 'right'){
+                swipeRightFibSOFF()
+            }else if(swipeDir == 'up'){
+                swipeUpFibSOFF()
+            }else if(swipeDir == 'down'){
+                swipeDownFibSOFF()
+            }
+        })
+    } else {
+        return console.log("You are on a desktop")
+    }
 }
